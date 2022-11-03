@@ -4,6 +4,9 @@
  */
 package  com.study.GreenPlace.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -42,6 +45,7 @@ public class Images implements Serializable {
     private String imagesName;
     @JoinColumn(name = "places_id", referencedColumnName = "places_id")
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Places placesId;
 
     public Images() {

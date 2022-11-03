@@ -4,6 +4,8 @@
  */
 package com.study.GreenPlace.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -102,6 +104,7 @@ public class Users implements Serializable {
 //    private Collection<Notifications> notificationsCollection1;
     @JoinColumn(name = "roles_id", referencedColumnName = "roles_id")
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Roles rolesId;
 
     public Users() {

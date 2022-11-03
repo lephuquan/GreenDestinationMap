@@ -4,6 +4,8 @@
  */
 package  com.study.GreenPlace.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -93,13 +95,16 @@ public class Places implements Serializable {
     @Column(name = "city")
     private String city;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "placesId")
+    @JsonManagedReference
     private Collection<Images> imagesCollection;
     @JoinColumn(name = "place_types_id", referencedColumnName = "place_types_id")
     @ManyToOne(optional = false)
+    @JsonManagedReference
     private PlaceTypes placeTypesId;
-//    @JoinColumn(name = "users_id", referencedColumnName = "users_id")
-//    @ManyToOne(optional = false)
-//    private Users usersId;
+    @JoinColumn(name = "users_id", referencedColumnName = "users_id")
+    @ManyToOne(optional = false)
+    @JsonManagedReference
+    private Users usersId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "placesId")
     private Collection<Comments> commentsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "placesId")
@@ -251,13 +256,13 @@ public class Places implements Serializable {
         this.placeTypesId = placeTypesId;
     }
 
-//    public Users getUsersId() {
-//        return usersId;
-//    }
-//
-//    public void setUsersId(Users usersId) {
-//        this.usersId = usersId;
-//    }
+    public Users getUsersId() {
+        return usersId;
+    }
+
+    public void setUsersId(Users usersId) {
+        this.usersId = usersId;
+    }
 
     @XmlTransient
     public Collection<Comments> getCommentsCollection() {

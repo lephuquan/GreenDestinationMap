@@ -4,19 +4,11 @@
  */
 package  com.study.GreenPlace.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -42,9 +34,11 @@ public class PlaceTypes implements Serializable {
     @Basic(optional = false)
     @Column(name = "place_types_name")
     private String placeTypesName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "placeTypesId")
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "placeTypesId", fetch = FetchType.LAZY)
     private Collection<Places> placesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "placeTypesId")
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "placeTypesId", fetch = FetchType.LAZY)
     private Collection<Criterias> criteriasCollection;
 
     public PlaceTypes() {
