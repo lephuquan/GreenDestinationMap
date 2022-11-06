@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package  com.study.GreenPlace.entity;
+package com.study.GreenPlace.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -14,12 +14,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -32,83 +33,76 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Criterias.findAll", query = "SELECT c FROM Criterias c"),
-    @NamedQuery(name = "Criterias.findByCriteriasId", query = "SELECT c FROM Criterias c WHERE c.criteriasId = :criteriasId"),
-    @NamedQuery(name = "Criterias.findByCriteriasName", query = "SELECT c FROM Criterias c WHERE c.criteriasName = :criteriasName"),
-    @NamedQuery(name = "Criterias.findByImageGXI", query = "SELECT c FROM Criterias c WHERE c.imageGXI = :imageGXI")})
+    @NamedQuery(name = "Criterias.findByCriteriaid", query = "SELECT c FROM Criterias c WHERE c.criteriaid = :criteriaid"),
+    @NamedQuery(name = "Criterias.findByImage", query = "SELECT c FROM Criterias c WHERE c.image = :image"),
+    @NamedQuery(name = "Criterias.findByCriterianame", query = "SELECT c FROM Criterias c WHERE c.criterianame = :criterianame")})
 public class Criterias implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "criterias_id")
-    private Short criteriasId;
+    @Column(name = "criteriaid")
+    private Short criteriaid;
     @Basic(optional = false)
-    @Column(name = "criterias_name")
-    private short criteriasName;
-    @Basic(optional = false)
-    @Lob
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "image")
-    private byte[] image;
-    @Column(name = "image_GXI")
-    private String imageGXI;
-    @JoinColumn(name = "place_types_id", referencedColumnName = "place_types_id")
+    private String image;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "criterianame")
+    private String criterianame;
+    @JoinColumn(name = "placetypeid", referencedColumnName = "placetypeid")
     @ManyToOne(optional = false)
-    private PlaceTypes placeTypesId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "criteriasId")
+    private PlaceTypes placetypeid;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "criteriaid")
     private Collection<Ratings> ratingsCollection;
 
     public Criterias() {
     }
 
-    public Criterias(Short criteriasId) {
-        this.criteriasId = criteriasId;
+    public Criterias(Short criteriaid) {
+        this.criteriaid = criteriaid;
     }
 
-    public Criterias(Short criteriasId, short criteriasName, byte[] image) {
-        this.criteriasId = criteriasId;
-        this.criteriasName = criteriasName;
+    public Criterias(Short criteriaid, String image, String criterianame) {
+        this.criteriaid = criteriaid;
         this.image = image;
+        this.criterianame = criterianame;
     }
 
-    public Short getCriteriasId() {
-        return criteriasId;
+    public Short getCriteriaid() {
+        return criteriaid;
     }
 
-    public void setCriteriasId(Short criteriasId) {
-        this.criteriasId = criteriasId;
+    public void setCriteriaid(Short criteriaid) {
+        this.criteriaid = criteriaid;
     }
 
-    public short getCriteriasName() {
-        return criteriasName;
-    }
-
-    public void setCriteriasName(short criteriasName) {
-        this.criteriasName = criteriasName;
-    }
-
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
-    public String getImageGXI() {
-        return imageGXI;
+    public String getCriterianame() {
+        return criterianame;
     }
 
-    public void setImageGXI(String imageGXI) {
-        this.imageGXI = imageGXI;
+    public void setCriterianame(String criterianame) {
+        this.criterianame = criterianame;
     }
 
-    public PlaceTypes getPlaceTypesId() {
-        return placeTypesId;
+    public PlaceTypes getPlacetypeid() {
+        return placetypeid;
     }
 
-    public void setPlaceTypesId(PlaceTypes placeTypesId) {
-        this.placeTypesId = placeTypesId;
+    public void setPlacetypeid(PlaceTypes placetypeid) {
+        this.placetypeid = placetypeid;
     }
 
     @XmlTransient
@@ -123,7 +117,7 @@ public class Criterias implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (criteriasId != null ? criteriasId.hashCode() : 0);
+        hash += (criteriaid != null ? criteriaid.hashCode() : 0);
         return hash;
     }
 
@@ -134,7 +128,7 @@ public class Criterias implements Serializable {
             return false;
         }
         Criterias other = (Criterias) object;
-        if ((this.criteriasId == null && other.criteriasId != null) || (this.criteriasId != null && !this.criteriasId.equals(other.criteriasId))) {
+        if ((this.criteriaid == null && other.criteriaid != null) || (this.criteriaid != null && !this.criteriaid.equals(other.criteriaid))) {
             return false;
         }
         return true;
@@ -142,7 +136,7 @@ public class Criterias implements Serializable {
 
     @Override
     public String toString() {
-        return " com.study.GreenPlace.entity.Criterias[ criteriasId=" + criteriasId + " ]";
+        return "com.study.GreenPlace.entity.Criterias[ criteriaid=" + criteriaid + " ]";
     }
     
 }

@@ -3,9 +3,9 @@ package com.study.GreenPlace.service;
 import com.study.GreenPlace.entity.CustomUserDetails;
 import com.study.GreenPlace.entity.Users;
 import com.study.GreenPlace.model.UserModel;
+import com.study.GreenPlace.repository.RoleRepository;
 import com.study.GreenPlace.repository.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,13 +13,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -44,5 +45,22 @@ public class UserService implements UserDetailsService {
     }
 
 
+    public boolean checkIfUserExist(String username) {
+        return userRepository.findByUsername(username) !=null ? true : false;
+    }
+    public String createAccount(UserModel userModel) {
+        if(checkIfUserExist(userModel.getUsername())){
+            return "fail";
+        }
+        Users userEntity = new ModelMapper().map(userModel, Users.class);
+        userEntity.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
+        userEntity.setRoleid(roleRepository.findByRole("USER"));
+        userEntity = userRepository.save(userEntity);
+//        Roles roles  = new Roles();
+//        roles.setUsersCollection((Collection<Users>) userEntity);
+//        roles.setRole(roleRepository.findByRole("USER"));
+//        roleRepository.save(roles);
+        return "success";
+    }
 
 }

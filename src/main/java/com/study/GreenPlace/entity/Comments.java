@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package  com.study.GreenPlace.entity;
+package com.study.GreenPlace.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,6 +21,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -30,50 +34,63 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Comments.findAll", query = "SELECT c FROM Comments c"),
-    @NamedQuery(name = "Comments.findByCommentsId", query = "SELECT c FROM Comments c WHERE c.commentsId = :commentsId"),
-    @NamedQuery(name = "Comments.findByContent", query = "SELECT c FROM Comments c WHERE c.content = :content"),
-    @NamedQuery(name = "Comments.findByPostDate", query = "SELECT c FROM Comments c WHERE c.postDate = :postDate")})
+    @NamedQuery(name = "Comments.findByCommentid", query = "SELECT c FROM Comments c WHERE c.commentid = :commentid"),
+    @NamedQuery(name = "Comments.findByPostdate", query = "SELECT c FROM Comments c WHERE c.postdate = :postdate"),
+    @NamedQuery(name = "Comments.findByContent", query = "SELECT c FROM Comments c WHERE c.content = :content")})
 public class Comments implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "comments_id")
-    private Short commentsId;
+    @Column(name = "commentid")
+    private Short commentid;
     @Basic(optional = false)
+    @NotNull
+    @Column(name = "postdate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date postdate;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "content")
     private String content;
-    @Basic(optional = false)
-    @Column(name = "post_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date postDate;
-    @JoinColumn(name = "places_id", referencedColumnName = "places_id")
+    @JoinColumn(name = "placeid", referencedColumnName = "placeid")
     @ManyToOne(optional = false)
-    private Places placesId;
-//    @JoinColumn(name = "userid", referencedColumnName = "users_id")
-//    @ManyToOne(optional = false)
-//    private Users userid;
+    @JsonBackReference
+    private Places placeid;
+    @JoinColumn(name = "useridfr", referencedColumnName = "userid")
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    private Users useridfr;
 
     public Comments() {
     }
 
-    public Comments(Short commentsId) {
-        this.commentsId = commentsId;
+    public Comments(Short commentid) {
+        this.commentid = commentid;
     }
 
-    public Comments(Short commentsId, String content, Date postDate) {
-        this.commentsId = commentsId;
+    public Comments(Short commentid, Date postdate, String content) {
+        this.commentid = commentid;
+        this.postdate = postdate;
         this.content = content;
-        this.postDate = postDate;
     }
 
-    public Short getCommentsId() {
-        return commentsId;
+    public Short getCommentid() {
+        return commentid;
     }
 
-    public void setCommentsId(Short commentsId) {
-        this.commentsId = commentsId;
+    public void setCommentid(Short commentid) {
+        this.commentid = commentid;
+    }
+
+    public Date getPostdate() {
+        return postdate;
+    }
+
+    public void setPostdate(Date postdate) {
+        this.postdate = postdate;
     }
 
     public String getContent() {
@@ -84,34 +101,26 @@ public class Comments implements Serializable {
         this.content = content;
     }
 
-    public Date getPostDate() {
-        return postDate;
+    public Places getPlaceid() {
+        return placeid;
     }
 
-    public void setPostDate(Date postDate) {
-        this.postDate = postDate;
+    public void setPlaceid(Places placeid) {
+        this.placeid = placeid;
     }
 
-    public Places getPlacesId() {
-        return placesId;
+    public Users getUseridfr() {
+        return useridfr;
     }
 
-    public void setPlacesId(Places placesId) {
-        this.placesId = placesId;
+    public void setUseridfr(Users useridfr) {
+        this.useridfr = useridfr;
     }
-
-//    public Users getUserid() {
-//        return userid;
-//    }
-//
-//    public void setUserid(Users userid) {
-//        this.userid = userid;
-//    }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (commentsId != null ? commentsId.hashCode() : 0);
+        hash += (commentid != null ? commentid.hashCode() : 0);
         return hash;
     }
 
@@ -122,7 +131,7 @@ public class Comments implements Serializable {
             return false;
         }
         Comments other = (Comments) object;
-        if ((this.commentsId == null && other.commentsId != null) || (this.commentsId != null && !this.commentsId.equals(other.commentsId))) {
+        if ((this.commentid == null && other.commentid != null) || (this.commentid != null && !this.commentid.equals(other.commentid))) {
             return false;
         }
         return true;
@@ -130,7 +139,7 @@ public class Comments implements Serializable {
 
     @Override
     public String toString() {
-        return " com.study.GreenPlace.entity.Comments[ commentsId=" + commentsId + " ]";
+        return "com.study.GreenPlace.entity.Comments[ commentid=" + commentid + " ]";
     }
     
 }

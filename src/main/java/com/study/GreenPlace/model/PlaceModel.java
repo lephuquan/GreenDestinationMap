@@ -4,7 +4,7 @@ import com.study.GreenPlace.entity.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 
@@ -12,23 +12,26 @@ import java.util.Date;
 @Setter
 public class PlaceModel {
 
-    private Short placesId;
-    private String placesName;
-    private String lat;
-    private String lon;
-    private String country;
-    private String district;
-    private String ward;
-    private String street;
-    private String description;
+    private Short placeid;
     private Date startday;
     private long mapid;
     private boolean status;
+    private String placename;
+    private String lat;
+    private String lon;
+    private String country;
     private String city;
+    private String district;
+    private String ward;
+    private String description;
+    private BigDecimal star;
+    private String road;
+    private String phone;
+    private Date browserday;
     private Collection<Images> imagesCollection;
-    private PlaceTypes placeTypesId;
-    private Users usersId;
+    private PlaceTypes placetypeid;
+    private Users userid;
     private Collection<Comments> commentsCollection;
     private Collection<Ratings> ratingsCollection;
-    private Collection<WishLists> wishListsCollection;
+    private Collection<WishListItems> wishListItemsCollection;
 }

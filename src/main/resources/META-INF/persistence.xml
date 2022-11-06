@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.study_GreenPlace_jar_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.study.GreenPlace.entity.WishListItems</class>
+    <class>com.study.GreenPlace.entity.Sysdiagrams</class>
+    <class>com.study.GreenPlace.entity.Comments</class>
+    <class>com.study.GreenPlace.entity.Notifications</class>
+    <class>com.study.GreenPlace.entity.Places</class>
+    <class>com.study.GreenPlace.entity.WishLists</class>
+    <class>com.study.GreenPlace.entity.Ratings</class>
+    <class>com.study.GreenPlace.entity.Roles</class>
+    <class>com.study.GreenPlace.entity.PlaceTypes</class>
+    <class>com.study.GreenPlace.entity.Images</class>
+    <class>com.study.GreenPlace.entity.Users</class>
+    <class>com.study.GreenPlace.entity.Criterias</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=Idaeec76253e9901c004f89da77f078cd1;encrypt=true;trustServerCertificate=true"/>
+      <property name="javax.persistence.jdbc.user" value="sa"/>
+      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+      <property name="javax.persistence.jdbc.password" value="12"/>
+    </properties>
+  </persistence-unit>
+</persistence>

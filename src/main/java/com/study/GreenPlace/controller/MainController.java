@@ -1,6 +1,7 @@
 package com.study.GreenPlace.controller;
 
 import com.study.GreenPlace.entity.CustomUserDetails;
+import com.study.GreenPlace.entity.CustomUserDetails;
 import com.study.GreenPlace.jwt.JwtTokenProvider;
 import com.study.GreenPlace.payload.LoginRequest;
 import com.study.GreenPlace.payload.LoginResponse;
@@ -39,7 +40,7 @@ public class MainController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Trả về jwt cho người dùng.
-        String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
+        String jwt = tokenProvider.generateToken ((CustomUserDetails) authentication.getPrincipal());
         return new LoginResponse(jwt);
     }
 

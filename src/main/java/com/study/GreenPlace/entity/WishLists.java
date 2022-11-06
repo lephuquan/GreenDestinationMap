@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package  com.study.GreenPlace.entity;
+package com.study.GreenPlace.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,8 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,74 +33,77 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "WishLists.findAll", query = "SELECT w FROM WishLists w"),
-    @NamedQuery(name = "WishLists.findByWishListsId", query = "SELECT w FROM WishLists w WHERE w.wishListsId = :wishListsId"),
-    @NamedQuery(name = "WishLists.findByWishListsName", query = "SELECT w FROM WishLists w WHERE w.wishListsName = :wishListsName")})
+    @NamedQuery(name = "WishLists.findByWishlistid", query = "SELECT w FROM WishLists w WHERE w.wishlistid = :wishlistid"),
+    @NamedQuery(name = "WishLists.findByWishlistname", query = "SELECT w FROM WishLists w WHERE w.wishlistname = :wishlistname")})
 public class WishLists implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "wish_lists_id")
-    private Short wishListsId;
+    @Column(name = "wishlistid")
+    private Short wishlistid;
     @Basic(optional = false)
-    @Column(name = "wish_lists_name")
-    private String wishListsName;
-    @JoinColumn(name = "places_id", referencedColumnName = "places_id")
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "wishlistname")
+    private String wishlistname;
+    @JoinColumn(name = "userid", referencedColumnName = "userid")
     @ManyToOne(optional = false)
-    private Places placesId;
-//    @JoinColumn(name = "userid", referencedColumnName = "users_id")
-//    @ManyToOne(optional = false)
-//    private Users userid;
+    private Users userid;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "wishlistid")
+    private Collection<WishListItems> wishListItemsCollection;
+
 
     public WishLists() {
     }
 
-    public WishLists(Short wishListsId) {
-        this.wishListsId = wishListsId;
+    public WishLists(Short wishlistid) {
+        this.wishlistid = wishlistid;
     }
 
-    public WishLists(Short wishListsId, String wishListsName) {
-        this.wishListsId = wishListsId;
-        this.wishListsName = wishListsName;
+    public WishLists(Short wishlistid, String wishlistname) {
+        this.wishlistid = wishlistid;
+        this.wishlistname = wishlistname;
     }
 
-    public Short getWishListsId() {
-        return wishListsId;
+    public Short getWishlistid() {
+        return wishlistid;
     }
 
-    public void setWishListsId(Short wishListsId) {
-        this.wishListsId = wishListsId;
+    public void setWishlistid(Short wishlistid) {
+        this.wishlistid = wishlistid;
     }
 
-    public String getWishListsName() {
-        return wishListsName;
+    public String getWishlistname() {
+        return wishlistname;
     }
 
-    public void setWishListsName(String wishListsName) {
-        this.wishListsName = wishListsName;
+    public void setWishlistname(String wishlistname) {
+        this.wishlistname = wishlistname;
     }
 
-    public Places getPlacesId() {
-        return placesId;
+    public Users getUserid() {
+        return userid;
     }
 
-    public void setPlacesId(Places placesId) {
-        this.placesId = placesId;
+    public void setUserid(Users userid) {
+        this.userid = userid;
     }
 
-//    public Users getUserid() {
-//        return userid;
-//    }
-//
-//    public void setUserid(Users userid) {
-//        this.userid = userid;
-//    }
+    @XmlTransient
+    public Collection<WishListItems> getWishListItemsCollection() {
+        return wishListItemsCollection;
+    }
+
+    public void setWishListItemsCollection(Collection<WishListItems> wishListItemsCollection) {
+        this.wishListItemsCollection = wishListItemsCollection;
+    }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (wishListsId != null ? wishListsId.hashCode() : 0);
+        hash += (wishlistid != null ? wishlistid.hashCode() : 0);
         return hash;
     }
 
@@ -105,7 +114,7 @@ public class WishLists implements Serializable {
             return false;
         }
         WishLists other = (WishLists) object;
-        if ((this.wishListsId == null && other.wishListsId != null) || (this.wishListsId != null && !this.wishListsId.equals(other.wishListsId))) {
+        if ((this.wishlistid == null && other.wishlistid != null) || (this.wishlistid != null && !this.wishlistid.equals(other.wishlistid))) {
             return false;
         }
         return true;
@@ -113,7 +122,7 @@ public class WishLists implements Serializable {
 
     @Override
     public String toString() {
-        return " com.study.GreenPlace.entity.WishLists[ wishListsId=" + wishListsId + " ]";
+        return "com.study.GreenPlace.entity.WishLists[ wishlistid=" + wishlistid + " ]";
     }
     
 }

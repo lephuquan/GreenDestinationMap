@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package  com.study.GreenPlace.entity;
+package com.study.GreenPlace.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -16,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,85 +30,89 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Ratings.findAll", query = "SELECT r FROM Ratings r"),
-    @NamedQuery(name = "Ratings.findByRatingsId", query = "SELECT r FROM Ratings r WHERE r.ratingsId = :ratingsId"),
-    @NamedQuery(name = "Ratings.findByValueCriteria", query = "SELECT r FROM Ratings r WHERE r.valueCriteria = :valueCriteria")})
+    @NamedQuery(name = "Ratings.findByRatingid", query = "SELECT r FROM Ratings r WHERE r.ratingid = :ratingid"),
+    @NamedQuery(name = "Ratings.findByCriteriavalue", query = "SELECT r FROM Ratings r WHERE r.criteriavalue = :criteriavalue")})
 public class Ratings implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ratings_id")
-    private Short ratingsId;
+    @Column(name = "ratingid")
+    private Short ratingid;
     @Basic(optional = false)
-    @Column(name = "value_Criteria")
-    private boolean valueCriteria;
-    @JoinColumn(name = "criterias_id", referencedColumnName = "criterias_id")
+    @NotNull
+    @Column(name = "criteriavalue")
+    private boolean criteriavalue;
+    @JoinColumn(name = "criteriaid", referencedColumnName = "criteriaid")
     @ManyToOne(optional = false)
-    private Criterias criteriasId;
-    @JoinColumn(name = "places_id", referencedColumnName = "places_id")
+    @JsonBackReference
+    private Criterias criteriaid;
+    @JoinColumn(name = "placeid", referencedColumnName = "placeid")
     @ManyToOne(optional = false)
-    private Places placesId;
-//    @JoinColumn(name = "userid", referencedColumnName = "users_id")
-//    @ManyToOne(optional = false)
-//    private Users userid;
+    @JsonBackReference
+    private Places placeid;
+    @JoinColumn(name = "useridfr", referencedColumnName = "userid")
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    private Users useridfr;
 
     public Ratings() {
     }
 
-    public Ratings(Short ratingsId) {
-        this.ratingsId = ratingsId;
+    public Ratings(Short ratingid) {
+        this.ratingid = ratingid;
     }
 
-    public Ratings(Short ratingsId, boolean valueCriteria) {
-        this.ratingsId = ratingsId;
-        this.valueCriteria = valueCriteria;
+    public Ratings(Short ratingid, boolean criteriavalue) {
+        this.ratingid = ratingid;
+        this.criteriavalue = criteriavalue;
     }
 
-    public Short getRatingsId() {
-        return ratingsId;
+    public Short getRatingid() {
+        return ratingid;
     }
 
-    public void setRatingsId(Short ratingsId) {
-        this.ratingsId = ratingsId;
+    public void setRatingid(Short ratingid) {
+        this.ratingid = ratingid;
     }
 
-    public boolean getValueCriteria() {
-        return valueCriteria;
+    public boolean getCriteriavalue() {
+        return criteriavalue;
     }
 
-    public void setValueCriteria(boolean valueCriteria) {
-        this.valueCriteria = valueCriteria;
+    public void setCriteriavalue(boolean criteriavalue) {
+        this.criteriavalue = criteriavalue;
     }
 
-    public Criterias getCriteriasId() {
-        return criteriasId;
+    public Criterias getCriteriaid() {
+        return criteriaid;
     }
 
-    public void setCriteriasId(Criterias criteriasId) {
-        this.criteriasId = criteriasId;
+    public void setCriteriaid(Criterias criteriaid) {
+        this.criteriaid = criteriaid;
     }
 
-    public Places getPlacesId() {
-        return placesId;
+    public Places getPlaceid() {
+        return placeid;
     }
 
-    public void setPlacesId(Places placesId) {
-        this.placesId = placesId;
+    public void setPlaceid(Places placeid) {
+        this.placeid = placeid;
     }
 
-//    public Users getUserid() {
-//        return userid;
-//    }
-//
-//    public void setUserid(Users userid) {
-//        this.userid = userid;
-//    }
+    public Users getUseridfr() {
+        return useridfr;
+    }
+
+    public void setUseridfr(Users useridfr) {
+        this.useridfr = useridfr;
+    }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (ratingsId != null ? ratingsId.hashCode() : 0);
+        hash += (ratingid != null ? ratingid.hashCode() : 0);
         return hash;
     }
 
@@ -116,7 +123,7 @@ public class Ratings implements Serializable {
             return false;
         }
         Ratings other = (Ratings) object;
-        if ((this.ratingsId == null && other.ratingsId != null) || (this.ratingsId != null && !this.ratingsId.equals(other.ratingsId))) {
+        if ((this.ratingid == null && other.ratingid != null) || (this.ratingid != null && !this.ratingid.equals(other.ratingid))) {
             return false;
         }
         return true;
@@ -124,7 +131,7 @@ public class Ratings implements Serializable {
 
     @Override
     public String toString() {
-        return " com.study.GreenPlace.entity.Ratings[ ratingsId=" + ratingsId + " ]";
+        return "com.study.GreenPlace.entity.Ratings[ ratingid=" + ratingid + " ]";
     }
     
 }
