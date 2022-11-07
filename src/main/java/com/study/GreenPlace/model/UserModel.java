@@ -11,7 +11,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class UserModel {
-
     private Short usersId;
     private String firstname;
     private String lastname;

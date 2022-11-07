@@ -8,6 +8,7 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,6 @@ public class UserController {
 
     @Autowired
     private JwtTokenProvider tokenProvider;
-
 
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
@@ -51,6 +51,7 @@ public class UserController {
     }
 
     @GetMapping("/userInfor")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> getUser(){
         String jwt = getJwtFromRequest(httpServletRequest);
         Short userId = tokenProvider.getUserIdFromJWT(jwt);
