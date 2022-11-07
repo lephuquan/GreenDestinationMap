@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/api/login", "/api", "/img/image", "/place/information").permitAll();
+        http.authorizeRequests().antMatchers("/api/login", "/api", "/img/image", "/place/information","/place/{id}","/place/findByName/{name}","/place/findByUserId/{id}", "/place/deletePlace/{id}", "/user/register").permitAll();
         http.authorizeRequests().antMatchers("/api/random").hasAuthority("USER");
         http.authorizeRequests().antMatchers("/api/random1").hasAuthority("ADMIN");
         http.cors() // Ngăn chặn request từ một domain khác

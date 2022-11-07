@@ -2,13 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package  com.study.GreenPlace.entity;
+package com.study.GreenPlace.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -21,52 +34,54 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PlaceTypes.findAll", query = "SELECT p FROM PlaceTypes p"),
-    @NamedQuery(name = "PlaceTypes.findByPlaceTypesId", query = "SELECT p FROM PlaceTypes p WHERE p.placeTypesId = :placeTypesId"),
-    @NamedQuery(name = "PlaceTypes.findByPlaceTypesName", query = "SELECT p FROM PlaceTypes p WHERE p.placeTypesName = :placeTypesName")})
+    @NamedQuery(name = "PlaceTypes.findByPlacetypeid", query = "SELECT p FROM PlaceTypes p WHERE p.placetypeid = :placetypeid"),
+    @NamedQuery(name = "PlaceTypes.findByType", query = "SELECT p FROM PlaceTypes p WHERE p.type = :type")})
 public class PlaceTypes implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "place_types_id")
-    private Short placeTypesId;
+    @Column(name = "placetypeid")
+    private Short placetypeid;
     @Basic(optional = false)
-    @Column(name = "place_types_name")
-    private String placeTypesName;
-    @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "placeTypesId", fetch = FetchType.LAZY)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "type")
+    private String type;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "placetypeid")
+    @JsonBackReference// important
     private Collection<Places> placesCollection;
-    @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "placeTypesId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "placetypeid")
+    @JsonBackReference// important
     private Collection<Criterias> criteriasCollection;
 
     public PlaceTypes() {
     }
 
-    public PlaceTypes(Short placeTypesId) {
-        this.placeTypesId = placeTypesId;
+    public PlaceTypes(Short placetypeid) {
+        this.placetypeid = placetypeid;
     }
 
-    public PlaceTypes(Short placeTypesId, String placeTypesName) {
-        this.placeTypesId = placeTypesId;
-        this.placeTypesName = placeTypesName;
+    public PlaceTypes(Short placetypeid, String type) {
+        this.placetypeid = placetypeid;
+        this.type = type;
     }
 
-    public Short getPlaceTypesId() {
-        return placeTypesId;
+    public Short getPlacetypeid() {
+        return placetypeid;
     }
 
-    public void setPlaceTypesId(Short placeTypesId) {
-        this.placeTypesId = placeTypesId;
+    public void setPlacetypeid(Short placetypeid) {
+        this.placetypeid = placetypeid;
     }
 
-    public String getPlaceTypesName() {
-        return placeTypesName;
+    public String getType() {
+        return type;
     }
 
-    public void setPlaceTypesName(String placeTypesName) {
-        this.placeTypesName = placeTypesName;
+    public void setType(String type) {
+        this.type = type;
     }
 
     @XmlTransient
@@ -90,7 +105,7 @@ public class PlaceTypes implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (placeTypesId != null ? placeTypesId.hashCode() : 0);
+        hash += (placetypeid != null ? placetypeid.hashCode() : 0);
         return hash;
     }
 
@@ -101,7 +116,7 @@ public class PlaceTypes implements Serializable {
             return false;
         }
         PlaceTypes other = (PlaceTypes) object;
-        if ((this.placeTypesId == null && other.placeTypesId != null) || (this.placeTypesId != null && !this.placeTypesId.equals(other.placeTypesId))) {
+        if ((this.placetypeid == null && other.placetypeid != null) || (this.placetypeid != null && !this.placetypeid.equals(other.placetypeid))) {
             return false;
         }
         return true;
@@ -109,7 +124,7 @@ public class PlaceTypes implements Serializable {
 
     @Override
     public String toString() {
-        return " com.study.GreenPlace.entity.PlaceTypes[ placeTypesId=" + placeTypesId + " ]";
+        return "com.study.GreenPlace.entity.PlaceTypes[ placetypeid=" + placetypeid + " ]";
     }
     
 }

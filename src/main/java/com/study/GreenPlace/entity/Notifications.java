@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package  com.study.GreenPlace.entity;
+package com.study.GreenPlace.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,6 +19,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -30,55 +32,82 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Notifications.findAll", query = "SELECT n FROM Notifications n"),
-    @NamedQuery(name = "Notifications.findByNotificationsId", query = "SELECT n FROM Notifications n WHERE n.notificationsId = :notificationsId"),
+    @NamedQuery(name = "Notifications.findByNotificationid", query = "SELECT n FROM Notifications n WHERE n.notificationid = :notificationid"),
+    @NamedQuery(name = "Notifications.findBySentdate", query = "SELECT n FROM Notifications n WHERE n.sentdate = :sentdate"),
+    @NamedQuery(name = "Notifications.findByState", query = "SELECT n FROM Notifications n WHERE n.state = :state"),
     @NamedQuery(name = "Notifications.findByTopic", query = "SELECT n FROM Notifications n WHERE n.topic = :topic"),
-    @NamedQuery(name = "Notifications.findByNotificationsContent", query = "SELECT n FROM Notifications n WHERE n.notificationsContent = :notificationsContent"),
-    @NamedQuery(name = "Notifications.findBySentDate", query = "SELECT n FROM Notifications n WHERE n.sentDate = :sentDate")})
+    @NamedQuery(name = "Notifications.findByNotificationcontent", query = "SELECT n FROM Notifications n WHERE n.notificationcontent = :notificationcontent")})
 public class Notifications implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "notifications_id")
-    private Short notificationsId;
+    @Column(name = "notificationid")
+    private Short notificationid;
     @Basic(optional = false)
+    @NotNull
+    @Column(name = "sentdate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date sentdate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "state")
+    private boolean state;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 40)
     @Column(name = "topic")
     private String topic;
     @Basic(optional = false)
-    @Column(name = "notifications_content")
-    private String notificationsContent;
-    @Basic(optional = false)
-    @Column(name = "sent_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date sentDate;
-//    @JoinColumn(name = "adminid", referencedColumnName = "users_id")
-//    @ManyToOne(optional = false)
-//    private Users adminid;
-//    @JoinColumn(name = "userid", referencedColumnName = "users_id")
-//    @ManyToOne(optional = false)
-//    private Users userid;
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "notificationcontent")
+    private String notificationcontent;
+    @JoinColumn(name = "useridfr", referencedColumnName = "userid")
+    @ManyToOne(optional = false)
+    private Users useridfr;
+    @JoinColumn(name = "adminid", referencedColumnName = "userid")
+    @ManyToOne(optional = false)
+    private Users adminid;
 
     public Notifications() {
     }
 
-    public Notifications(Short notificationsId) {
-        this.notificationsId = notificationsId;
+    public Notifications(Short notificationid) {
+        this.notificationid = notificationid;
     }
 
-    public Notifications(Short notificationsId, String topic, String notificationsContent, Date sentDate) {
-        this.notificationsId = notificationsId;
+    public Notifications(Short notificationid, Date sentdate, boolean state, String topic, String notificationcontent) {
+        this.notificationid = notificationid;
+        this.sentdate = sentdate;
+        this.state = state;
         this.topic = topic;
-        this.notificationsContent = notificationsContent;
-        this.sentDate = sentDate;
+        this.notificationcontent = notificationcontent;
     }
 
-    public Short getNotificationsId() {
-        return notificationsId;
+    public Short getNotificationid() {
+        return notificationid;
     }
 
-    public void setNotificationsId(Short notificationsId) {
-        this.notificationsId = notificationsId;
+    public void setNotificationid(Short notificationid) {
+        this.notificationid = notificationid;
+    }
+
+    public Date getSentdate() {
+        return sentdate;
+    }
+
+    public void setSentdate(Date sentdate) {
+        this.sentdate = sentdate;
+    }
+
+    public boolean getState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
     }
 
     public String getTopic() {
@@ -89,42 +118,34 @@ public class Notifications implements Serializable {
         this.topic = topic;
     }
 
-    public String getNotificationsContent() {
-        return notificationsContent;
+    public String getNotificationcontent() {
+        return notificationcontent;
     }
 
-    public void setNotificationsContent(String notificationsContent) {
-        this.notificationsContent = notificationsContent;
+    public void setNotificationcontent(String notificationcontent) {
+        this.notificationcontent = notificationcontent;
     }
 
-    public Date getSentDate() {
-        return sentDate;
+    public Users getUseridfr() {
+        return useridfr;
     }
 
-    public void setSentDate(Date sentDate) {
-        this.sentDate = sentDate;
+    public void setUseridfr(Users useridfr) {
+        this.useridfr = useridfr;
     }
 
-//    public Users getAdminid() {
-//        return adminid;
-//    }
-//
-//    public void setAdminid(Users adminid) {
-//        this.adminid = adminid;
-//    }
-//
-//    public Users getUserid() {
-//        return userid;
-//    }
-//
-//    public void setUserid(Users userid) {
-//        this.userid = userid;
-//    }
+    public Users getAdminid() {
+        return adminid;
+    }
+
+    public void setAdminid(Users adminid) {
+        this.adminid = adminid;
+    }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (notificationsId != null ? notificationsId.hashCode() : 0);
+        hash += (notificationid != null ? notificationid.hashCode() : 0);
         return hash;
     }
 
@@ -135,7 +156,7 @@ public class Notifications implements Serializable {
             return false;
         }
         Notifications other = (Notifications) object;
-        if ((this.notificationsId == null && other.notificationsId != null) || (this.notificationsId != null && !this.notificationsId.equals(other.notificationsId))) {
+        if ((this.notificationid == null && other.notificationid != null) || (this.notificationid != null && !this.notificationid.equals(other.notificationid))) {
             return false;
         }
         return true;
@@ -143,7 +164,7 @@ public class Notifications implements Serializable {
 
     @Override
     public String toString() {
-        return " com.study.GreenPlace.entity.Notifications[ notificationsId=" + notificationsId + " ]";
+        return "com.study.GreenPlace.entity.Notifications[ notificationid=" + notificationid + " ]";
     }
     
 }

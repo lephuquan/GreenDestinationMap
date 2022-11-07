@@ -25,6 +25,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -35,121 +37,115 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "users")
 @XmlRootElement
-//@NamedQueries({
-//    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
-//    @NamedQuery(name = "Users.findByUsersId", query = "SELECT u FROM Users u WHERE u.usersId = :usersId"),
-//    @NamedQuery(name = "Users.findByFirstname", query = "SELECT u FROM Users u WHERE u.firstname = :firstname"),
-//    @NamedQuery(name = "Users.findByLastname", query = "SELECT u FROM Users u WHERE u.lastname = :lastname"),
-//    @NamedQuery(name = "Users.findByGender", query = "SELECT u FROM Users u WHERE u.gender = :gender"),
-//    @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"),
-//    @NamedQuery(name = "Users.findByPhonenumber", query = "SELECT u FROM Users u WHERE u.phonenumber = :phonenumber"),
-//    @NamedQuery(name = "Users.findByAddress", query = "SELECT u FROM Users u WHERE u.address = :address"),
-//    @NamedQuery(name = "Users.findByAvatarGXI", query = "SELECT u FROM Users u WHERE u.avatarGXI = :avatarGXI"),
-//    @NamedQuery(name = "Users.findByStartdate", query = "SELECT u FROM Users u WHERE u.startdate = :startdate"),
-//    @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u WHERE u.username = :username"),
-//    @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")})
+@NamedQueries({
+    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
+    @NamedQuery(name = "Users.findByUserid", query = "SELECT u FROM Users u WHERE u.userid = :userid"),
+    @NamedQuery(name = "Users.findByGender", query = "SELECT u FROM Users u WHERE u.gender = :gender"),
+    @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"),
+    @NamedQuery(name = "Users.findByAddress", query = "SELECT u FROM Users u WHERE u.address = :address"),
+    @NamedQuery(name = "Users.findByStartdate", query = "SELECT u FROM Users u WHERE u.startdate = :startdate"),
+    @NamedQuery(name = "Users.findByFirstname", query = "SELECT u FROM Users u WHERE u.firstname = :firstname"),
+    @NamedQuery(name = "Users.findByLastname", query = "SELECT u FROM Users u WHERE u.lastname = :lastname"),
+    @NamedQuery(name = "Users.findByUsername", query = "SELECT u FROM Users u WHERE u.username = :username"),
+    @NamedQuery(name = "Users.findByToken", query = "SELECT u FROM Users u WHERE u.token = :token"),
+    @NamedQuery(name = "Users.findByPhonenumber", query = "SELECT u FROM Users u WHERE u.phonenumber = :phonenumber")})
 public class Users implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "users_id")
-    private Short usersId;
+    @Column(name = "userid")
+    private Short userid;
     @Basic(optional = false)
-    @Column(name = "firstname")
-    private String firstname;
-    @Basic(optional = false)
-    @Column(name = "lastname")
-    private String lastname;
-    @Basic(optional = false)
+    @NotNull
     @Column(name = "gender")
     private boolean gender;
-    @Basic(optional = false)
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 100)
     @Column(name = "email")
     private String email;
-    @Basic(optional = false)
-    @Column(name = "phonenumber")
-    private String phonenumber;
-    @Basic(optional = false)
+    @Size(max = 1024)
     @Column(name = "address")
     private String address;
-    @Basic(optional = false)
     @Lob
     @Column(name = "avatar")
     private byte[] avatar;
-    @Column(name = "avatar_GXI")
-    private String avatarGXI;
-    @Basic(optional = false)
     @Column(name = "startdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startdate;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "firstname")
+    private String firstname;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "lastname")
+    private String lastname;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Size(min = 1, max = 2147483647)
     @Column(name = "password")
     private String password;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersId")
-//    private Collection<Places> placesCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
-//    private Collection<Comments> commentsCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
-//    private Collection<Ratings> ratingsCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
-//    private Collection<WishLists> wishListsCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "adminid")
-//    private Collection<Notifications> notificationsCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
-//    private Collection<Notifications> notificationsCollection1;
-    @JoinColumn(name = "roles_id", referencedColumnName = "roles_id")
-    @ManyToOne(optional = false)
+    @Size(max = 40)
+    @Column(name = "token")
+    private String token;
+    @Size(max = 20)
+    @Column(name = "phonenumber")
+    private String phonenumber;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
     @JsonBackReference
-    private Roles rolesId;
+    private Collection<Places> placesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "useridfr")
+    @JsonBackReference
+    private Collection<Comments> commentsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "useridfr")
+    @JsonBackReference
+    private Collection<Ratings> ratingsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
+    @JsonBackReference
+    private Collection<WishLists> wishListsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "useridfr")
+    @JsonBackReference
+    private Collection<Notifications> notificationsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "adminid")
+    @JsonBackReference
+    private Collection<Notifications> notificationsCollection1;
+    @JoinColumn(name = "roleid", referencedColumnName = "roleid")
+    @JsonBackReference
+    @ManyToOne(optional = false)
+    private Roles roleid;
 
     public Users() {
     }
 
-    public Users(Short usersId) {
-        this.usersId = usersId;
+    public Users(Short userid) {
+        this.userid = userid;
     }
 
-    public Users(Short usersId, String firstname, String lastname, boolean gender, String email, String phonenumber, String address, byte[] avatar, Date startdate, String username, String password) {
-        this.usersId = usersId;
+    public Users(Short userid, boolean gender, String firstname, String lastname, String username, String password) {
+        this.userid = userid;
+        this.gender = gender;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.gender = gender;
-        this.email = email;
-        this.phonenumber = phonenumber;
-        this.address = address;
-        this.avatar = avatar;
-        this.startdate = startdate;
         this.username = username;
         this.password = password;
     }
 
-    public Short getUsersId() {
-        return usersId;
+    public Short getUserid() {
+        return userid;
     }
 
-    public void setUsersId(Short usersId) {
-        this.usersId = usersId;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setUserid(Short userid) {
+        this.userid = userid;
     }
 
     public boolean getGender() {
@@ -168,14 +164,6 @@ public class Users implements Serializable {
         this.email = email;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
-    }
-
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -192,20 +180,28 @@ public class Users implements Serializable {
         this.avatar = avatar;
     }
 
-    public String getAvatarGXI() {
-        return avatarGXI;
-    }
-
-    public void setAvatarGXI(String avatarGXI) {
-        this.avatarGXI = avatarGXI;
-    }
-
     public Date getStartdate() {
         return startdate;
     }
 
     public void setStartdate(Date startdate) {
         this.startdate = startdate;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getUsername() {
@@ -223,92 +219,108 @@ public class Users implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-//
-//    @XmlTransient
-//    public Collection<Places> getPlacesCollection() {
-//        return placesCollection;
-//    }
-//
-//    public void setPlacesCollection(Collection<Places> placesCollection) {
-//        this.placesCollection = placesCollection;
-//    }
-//
-//    @XmlTransient
-//    public Collection<Comments> getCommentsCollection() {
-//        return commentsCollection;
-//    }
-//
-//    public void setCommentsCollection(Collection<Comments> commentsCollection) {
-//        this.commentsCollection = commentsCollection;
-//    }
-//
-//    @XmlTransient
-//    public Collection<Ratings> getRatingsCollection() {
-//        return ratingsCollection;
-//    }
-//
-//    public void setRatingsCollection(Collection<Ratings> ratingsCollection) {
-//        this.ratingsCollection = ratingsCollection;
-//    }
-//
-//    @XmlTransient
-//    public Collection<WishLists> getWishListsCollection() {
-//        return wishListsCollection;
-//    }
-//
-//    public void setWishListsCollection(Collection<WishLists> wishListsCollection) {
-//        this.wishListsCollection = wishListsCollection;
-//    }
-//
-//    @XmlTransient
-//    public Collection<Notifications> getNotificationsCollection() {
-//        return notificationsCollection;
-//    }
-//
-//    public void setNotificationsCollection(Collection<Notifications> notificationsCollection) {
-//        this.notificationsCollection = notificationsCollection;
-//    }
-//
-//    @XmlTransient
-//    public Collection<Notifications> getNotificationsCollection1() {
-//        return notificationsCollection1;
-//    }
-//
-//    public void setNotificationsCollection1(Collection<Notifications> notificationsCollection1) {
-//        this.notificationsCollection1 = notificationsCollection1;
-//    }
-//
-    public Roles getRolesId() {
-        return rolesId;
+
+    public String getToken() {
+        return token;
     }
 
-    public void setRolesId(Roles rolesId) {
-        this.rolesId = rolesId;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-//    @Override
-//    public int hashCode() {
-//        int hash = 0;
-//        hash += (usersId != null ? usersId.hashCode() : 0);
-//        return hash;
-//    }
-//
-//    @Override
-//    public boolean equals(Object object) {
-//        // TODO: Warning - this method won't work in the case the id fields are not set
-//        if (!(object instanceof Users)) {
-//            return false;
-//        }
-//        Users other = (Users) object;
-//        if ((this.usersId == null && other.usersId != null) || (this.usersId != null && !this.usersId.equals(other.usersId))) {
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return " com.study.GreenPlace.entity.Users[ usersId=" + usersId + " ]";
-//    }
-//
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    @XmlTransient
+    public Collection<Places> getPlacesCollection() {
+        return placesCollection;
+    }
+
+    public void setPlacesCollection(Collection<Places> placesCollection) {
+        this.placesCollection = placesCollection;
+    }
+
+    @XmlTransient
+    public Collection<Comments> getCommentsCollection() {
+        return commentsCollection;
+    }
+
+    public void setCommentsCollection(Collection<Comments> commentsCollection) {
+        this.commentsCollection = commentsCollection;
+    }
+
+    @XmlTransient
+    public Collection<Ratings> getRatingsCollection() {
+        return ratingsCollection;
+    }
+
+    public void setRatingsCollection(Collection<Ratings> ratingsCollection) {
+        this.ratingsCollection = ratingsCollection;
+    }
+
+    @XmlTransient
+    public Collection<WishLists> getWishListsCollection() {
+        return wishListsCollection;
+    }
+
+    public void setWishListsCollection(Collection<WishLists> wishListsCollection) {
+        this.wishListsCollection = wishListsCollection;
+    }
+
+    @XmlTransient
+    public Collection<Notifications> getNotificationsCollection() {
+        return notificationsCollection;
+    }
+
+    public void setNotificationsCollection(Collection<Notifications> notificationsCollection) {
+        this.notificationsCollection = notificationsCollection;
+    }
+
+    @XmlTransient
+    public Collection<Notifications> getNotificationsCollection1() {
+        return notificationsCollection1;
+    }
+
+    public void setNotificationsCollection1(Collection<Notifications> notificationsCollection1) {
+        this.notificationsCollection1 = notificationsCollection1;
+    }
+
+    public Roles getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Roles roleid) {
+        this.roleid = roleid;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (userid != null ? userid.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Users)) {
+            return false;
+        }
+        Users other = (Users) object;
+        if ((this.userid == null && other.userid != null) || (this.userid != null && !this.userid.equals(other.userid))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.study.GreenPlace.entity.Users[ userid=" + userid + " ]";
+    }
+    
 }

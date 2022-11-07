@@ -1,17 +1,14 @@
 package com.study.GreenPlace.controller;
 
-import com.study.GreenPlace.entity.Users;
 import com.study.GreenPlace.jwt.JwtTokenProvider;
+import com.study.GreenPlace.model.UserModel;
 import com.study.GreenPlace.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -56,5 +53,10 @@ public class UserController {
         String jwt = getJwtFromRequest(httpServletRequest);
         Short userId = tokenProvider.getUserIdFromJWT(jwt);
         return ok(userService.getUser(userId));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody UserModel user){
+        return ResponseEntity.ok(userService.createAccount(user));
     }
 }

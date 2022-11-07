@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package  com.study.GreenPlace.entity;
+package com.study.GreenPlace.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -10,11 +10,15 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -27,47 +31,64 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Roles.findAll", query = "SELECT r FROM Roles r"),
-    @NamedQuery(name = "Roles.findByRolesId", query = "SELECT r FROM Roles r WHERE r.rolesId = :rolesId"),
-    @NamedQuery(name = "Roles.findByRole", query = "SELECT r FROM Roles r WHERE r.role = :role")})
+    @NamedQuery(name = "Roles.findByRoleid", query = "SELECT r FROM Roles r WHERE r.roleid = :roleid"),
+    @NamedQuery(name = "Roles.findByRole", query = "SELECT r FROM Roles r WHERE r.role = :role"),
+    @NamedQuery(name = "Roles.findByRolesname", query = "SELECT r FROM Roles r WHERE r.rolesname = :rolesname")})
 public class Roles implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "roles_id")
-    private Short rolesId;
+    @Column(name = "roleid")
+    private Short roleid;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "role")
-    private String role;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolesId")
+    private short role;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "rolesname")
+    private String rolesname;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleid")
     private Collection<Users> usersCollection;
 
     public Roles() {
     }
 
-    public Roles(Short rolesId) {
-        this.rolesId = rolesId;
+    public Roles(Short roleid) {
+        this.roleid = roleid;
     }
 
-    public Roles(Short rolesId, String role) {
-        this.rolesId = rolesId;
+    public Roles(Short roleid, short role, String rolesname) {
+        this.roleid = roleid;
         this.role = role;
+        this.rolesname = rolesname;
     }
 
-    public Short getRolesId() {
-        return rolesId;
+    public Short getRoleid() {
+        return roleid;
     }
 
-    public void setRolesId(Short rolesId) {
-        this.rolesId = rolesId;
+    public void setRoleid(Short roleid) {
+        this.roleid = roleid;
     }
 
-    public String getRole() {
+    public short getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(short role) {
         this.role = role;
+    }
+
+    public String getRolesname() {
+        return rolesname;
+    }
+
+    public void setRolesname(String rolesname) {
+        this.rolesname = rolesname;
     }
 
     @XmlTransient
@@ -82,7 +103,7 @@ public class Roles implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (rolesId != null ? rolesId.hashCode() : 0);
+        hash += (roleid != null ? roleid.hashCode() : 0);
         return hash;
     }
 
@@ -93,7 +114,7 @@ public class Roles implements Serializable {
             return false;
         }
         Roles other = (Roles) object;
-        if ((this.rolesId == null && other.rolesId != null) || (this.rolesId != null && !this.rolesId.equals(other.rolesId))) {
+        if ((this.roleid == null && other.roleid != null) || (this.roleid != null && !this.roleid.equals(other.roleid))) {
             return false;
         }
         return true;
@@ -101,7 +122,7 @@ public class Roles implements Serializable {
 
     @Override
     public String toString() {
-        return " com.study.GreenPlace.entity.Roles[ rolesId=" + rolesId + " ]";
+        return "com.study.GreenPlace.entity.Roles[ roleid=" + roleid + " ]";
     }
     
 }

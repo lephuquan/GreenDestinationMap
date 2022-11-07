@@ -1,11 +1,9 @@
 package com.study.GreenPlace.model;
 
 
-import com.study.GreenPlace.entity.Users;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -21,4 +19,5 @@ public class UserModel {
     private byte[] avatar;
     private Date startdate;
     private String username;
+    private String password;
 }

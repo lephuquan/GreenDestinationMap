@@ -18,8 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,56 +25,41 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ADMIN
  */
 @Entity
-@Table(name = "images")
+@Table(name = "wish_list_items")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Images.findAll", query = "SELECT i FROM Images i"),
-    @NamedQuery(name = "Images.findByImageid", query = "SELECT i FROM Images i WHERE i.imageid = :imageid"),
-    @NamedQuery(name = "Images.findByImagename", query = "SELECT i FROM Images i WHERE i.imagename = :imagename")})
-public class Images implements Serializable {
+    @NamedQuery(name = "WishListItems.findAll", query = "SELECT w FROM WishListItems w"),
+    @NamedQuery(name = "WishListItems.findByWishlistitemid", query = "SELECT w FROM WishListItems w WHERE w.wishlistitemid = :wishlistitemid")})
+public class WishListItems implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "imageid")
-    private Short imageid;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "imagename")
-    private String imagename;
+    @Column(name = "wishlistitemid")
+    private Short wishlistitemid;
     @JoinColumn(name = "placeid", referencedColumnName = "placeid")
     @ManyToOne(optional = false)
     @JsonBackReference
     private Places placeid;
+    @JoinColumn(name = "wishlistid", referencedColumnName = "wishlistid")
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    private WishLists wishlistid;
 
-    public Images() {
+    public WishListItems() {
     }
 
-    public Images(Short imageid) {
-        this.imageid = imageid;
+    public WishListItems(Short wishlistitemid) {
+        this.wishlistitemid = wishlistitemid;
     }
 
-    public Images(Short imageid, String imagename) {
-        this.imageid = imageid;
-        this.imagename = imagename;
+    public Short getWishlistitemid() {
+        return wishlistitemid;
     }
 
-    public Short getImageid() {
-        return imageid;
-    }
-
-    public void setImageid(Short imageid) {
-        this.imageid = imageid;
-    }
-
-    public String getImagename() {
-        return imagename;
-    }
-
-    public void setImagename(String imagename) {
-        this.imagename = imagename;
+    public void setWishlistitemid(Short wishlistitemid) {
+        this.wishlistitemid = wishlistitemid;
     }
 
     public Places getPlaceid() {
@@ -87,21 +70,29 @@ public class Images implements Serializable {
         this.placeid = placeid;
     }
 
+    public WishLists getWishlistid() {
+        return wishlistid;
+    }
+
+    public void setWishlistid(WishLists wishlistid) {
+        this.wishlistid = wishlistid;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (imageid != null ? imageid.hashCode() : 0);
+        hash += (wishlistitemid != null ? wishlistitemid.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Images)) {
+        if (!(object instanceof WishListItems)) {
             return false;
         }
-        Images other = (Images) object;
-        if ((this.imageid == null && other.imageid != null) || (this.imageid != null && !this.imageid.equals(other.imageid))) {
+        WishListItems other = (WishListItems) object;
+        if ((this.wishlistitemid == null && other.wishlistitemid != null) || (this.wishlistitemid != null && !this.wishlistitemid.equals(other.wishlistitemid))) {
             return false;
         }
         return true;
@@ -109,7 +100,7 @@ public class Images implements Serializable {
 
     @Override
     public String toString() {
-        return "com.study.GreenPlace.entity.Images[ imageid=" + imageid + " ]";
+        return "com.study.GreenPlace.entity.WishListItems[ wishlistitemid=" + wishlistitemid + " ]";
     }
     
 }
