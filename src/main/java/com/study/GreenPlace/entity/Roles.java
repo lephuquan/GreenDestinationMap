@@ -4,6 +4,8 @@
  */
 package com.study.GreenPlace.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -52,6 +54,7 @@ public class Roles implements Serializable {
     @Column(name = "rolesname")
     private String rolesname;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleid")
+    @JsonBackReference
     private Collection<Users> usersCollection;
 
     public Roles() {

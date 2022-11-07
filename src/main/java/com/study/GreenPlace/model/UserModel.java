@@ -1,24 +1,30 @@
 package com.study.GreenPlace.model;
 
 
+import com.study.GreenPlace.entity.Roles;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Getter
 @Setter
 public class UserModel {
 
-    private Short usersId;
-    private String firstname;
-    private String lastname;
+    private Short userid;
     private boolean gender;
     private String email;
-    private String phonenumber;
     private String address;
     private byte[] avatar;
     private Date startdate;
+    private String firstname;
+    private String lastname;
     private String username;
     private String password;
+    private String token;
+    private String phonenumber;
+    private Roles roleid;
 }
