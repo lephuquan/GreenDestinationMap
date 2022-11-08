@@ -3,6 +3,7 @@ package com.study.GreenPlace.controller;
 import com.study.GreenPlace.entity.CustomUserDetails;
 import com.study.GreenPlace.entity.CustomUserDetails;
 import com.study.GreenPlace.jwt.JwtTokenProvider;
+import com.study.GreenPlace.model.UserModel;
 import com.study.GreenPlace.payload.LoginRequest;
 import com.study.GreenPlace.payload.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,14 @@ public class MainController {
 
     @Autowired
     private JwtTokenProvider tokenProvider;
+
+    // @PostMapping("/register1")
+//    @RequestMapping(method = RequestMethod.POST)
+////    @PostMapping(value="/register", consumes={"application/json"})
+//    public String registerUser(@RequestBody UserModel user){
+//        return "";
+//    }
+
 
     @PostMapping("/login")
     @CrossOrigin(origins = "http://localhost:8080")

@@ -2,6 +2,7 @@ package com.study.GreenPlace.model;
 
 
 import com.study.GreenPlace.entity.Roles;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+@Data
 public class UserModel {
 
     private Short userid;
@@ -26,5 +28,5 @@ public class UserModel {
     private String password;
     private String token;
     private String phonenumber;
-    private Roles roleid;
+//    private RolesModel roleid;
 }
