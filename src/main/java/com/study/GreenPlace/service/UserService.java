@@ -41,7 +41,7 @@ public class UserService implements UserDetailsService {
     }
 
     public static void main(String... args) {
-        System.out.println(new BCryptPasswordEncoder().encode("tung"));
+        System.out.println(new BCryptPasswordEncoder().encode("thien"));
     }
 
 
