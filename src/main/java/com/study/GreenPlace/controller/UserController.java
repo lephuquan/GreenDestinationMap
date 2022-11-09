@@ -59,4 +59,10 @@ public class UserController {
     public ResponseEntity<?> registerUser(@RequestBody UserModel user){
         return ResponseEntity.ok(userService.createAccount(user));
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<?>  updateUser(@RequestBody UserModel user){
+        return ResponseEntity.ok(userService.updateAccount(user));
+    }
+
 }

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class ImageModel {
 
-    private Short imagesId;
-    private String imagesName;
-    private Places placesId;
+    private Short imageid;
+    private String imagename;
+    private Places placeid;
 }

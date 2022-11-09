@@ -1,6 +1,7 @@
 package com.study.GreenPlace.service;
 
 import com.study.GreenPlace.entity.CustomUserDetails;
+import com.study.GreenPlace.entity.Places;
 import com.study.GreenPlace.entity.Users;
 import com.study.GreenPlace.model.UserModel;
 import com.study.GreenPlace.repository.RoleRepository;
@@ -48,18 +49,44 @@ public class UserService implements UserDetailsService {
     public boolean checkIfUserExist(String username) {
         return userRepository.findByUsername(username) !=null ? true : false;
     }
+
     public String createAccount(UserModel userModel) {
         if(checkIfUserExist(userModel.getUsername())){
             return "fail";
         }
-        Users userEntity = new ModelMapper().map(userModel, Users.class);
-        userEntity.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
-        userEntity.setRoleid(roleRepository.findByRole("USER"));
-        userEntity = userRepository.save(userEntity);
-//        Roles roles  = new Roles();
-//        roles.setUsersCollection((Collection<Users>) userEntity);
-//        roles.setRole(roleRepository.findByRole("USER"));
-//        roleRepository.save(roles);
+        Users users = new ModelMapper().map(userModel, Users.class);
+        users.setUserid(userModel.getUserid());
+//        users.setGender(userModel.get); // ko get dc gender
+        users.setEmail(userModel.getEmail());
+        users.setAddress(userModel.getAddress());
+        users.setAvatar(userModel.getAvatar());
+        users.setStartdate(userModel.getStartdate());
+        users.setFirstname(userModel.getFirstname());
+        users.setLastname(userModel.getLastname());
+        users.setUsername(userModel.getUsername());// <=20 character
+        users.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
+        users.setToken(userModel.getToken());
+        users.setPhonenumber(userModel.getPhonenumber());
+        users.setRoleid(roleRepository.findByRole("USER"));
+        users = userRepository.save(users);
+        return "success";
+    }
+
+    public String updateAccount(UserModel userModel) {
+        Users users = userRepository.getReferenceById(userModel.getUserid());
+        //        users.setGender(userModel.); // ko get dc gender
+        users.setEmail(userModel.getEmail());
+        users.setAddress(userModel.getAddress());
+        users.setAvatar(userModel.getAvatar());
+        users.setStartdate(userModel.getStartdate());
+        users.setFirstname(userModel.getFirstname());
+        users.setLastname(userModel.getLastname());
+        users.setUsername(userModel.getUsername());// <=20 character
+        users.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
+        users.setToken(userModel.getToken());
+        users.setPhonenumber(userModel.getPhonenumber());
+        users.setRoleid(roleRepository.findByRole("USER"));
+        users = userRepository.save(users);
         return "success";
     }
 

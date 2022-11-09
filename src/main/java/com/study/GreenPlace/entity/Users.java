@@ -5,6 +5,7 @@
 package com.study.GreenPlace.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -69,7 +70,7 @@ public class Users implements Serializable {
     @Column(name = "address")
     private String address;
 
-//    @Lob //type lob
+//    @Lob
     @Column(name = "avatar")
     private String avatar;
     @Column(name = "startdate")
@@ -92,7 +93,7 @@ public class Users implements Serializable {
     private String username;
     @Basic(optional = false)
     @NotNull
-    @Lob
+//    @Lob
     @Size(min = 1, max = 2147483647)
     @Column(name = "password")
     private String password;
