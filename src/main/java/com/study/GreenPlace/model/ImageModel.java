@@ -10,5 +10,5 @@ public class ImageModel {
 
     private Short imageid;
     private String imagename;
-    private Places placeid;
+    private PlaceModel placeid;
 }

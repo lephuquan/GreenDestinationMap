@@ -1,5 +1,7 @@
 package com.study.GreenPlace.controller;
 
+import com.study.GreenPlace.model.PlaceModel;
+import com.study.GreenPlace.model.UserModel;
 import com.study.GreenPlace.repository.PlaceRepository;
 import com.study.GreenPlace.service.ImageService;
 import com.study.GreenPlace.service.PlaceService;
@@ -37,7 +39,10 @@ public class HomeController {
         return ok(placeService.findPlaceBySupplierId(id));
     }
 
-
+    @PostMapping("/addPlace")
+    public ResponseEntity<?> addPlace(@RequestBody PlaceModel placeModel){
+        return ResponseEntity.ok(placeService.addPlace(placeModel));
+    }
 
     @RequestMapping(value = "/deletePlace/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deletePlace(@PathVariable(value = "id") short id) {

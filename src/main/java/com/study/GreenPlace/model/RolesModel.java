@@ -6,5 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RolesModel {
-    private Short id;
+    private Short roleid;
+    private short role;
+    private String rolesname;
 }

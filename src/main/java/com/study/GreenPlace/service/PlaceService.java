@@ -1,11 +1,8 @@
 package com.study.GreenPlace.service;
 
-import com.study.GreenPlace.entity.Images;
-import com.study.GreenPlace.entity.Places;
-import com.study.GreenPlace.model.ImageModel;
-import com.study.GreenPlace.model.PlaceModel;
-import com.study.GreenPlace.repository.PlaceRepository;
-import com.study.GreenPlace.repository.PlaceTypeRepository;
+import com.study.GreenPlace.entity.*;
+import com.study.GreenPlace.model.*;
+import com.study.GreenPlace.repository.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +19,21 @@ public class PlaceService {
 
     @Autowired
     private PlaceTypeRepository placeTypeRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ImageRepository imageRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
+    private  RatingRepository ratingRepository;
+
+    @Autowired
+    private  WishListItemsRepository wishListItemsRepository;
 
 
     public List<Places> getAllPlace(){
@@ -62,19 +74,44 @@ public class PlaceService {
         places.setRoad(placeModel.getRoad());
         places.setPhone(placeModel.getPhone());
         places.setBrowserday(placeModel.getBrowserday());
-        //manyToOne
-        places.setPlacetypeid(placeModel.getPlacetypeid());
-        places.setUserid(placeModel.getUserid());
+        places.setPlacetypeid(placeTypeRepository.findById(placeModel.getPlaceTypeModel().getPlacetypeid()).get());
+        places.setUserid(userRepository.findById(placeModel.getUserModel().getUserid()).get());
 
-        placeRepository.save(places);
+        places = placeRepository.save(places);
 
+        //handle list image
+        Collection<ImageModel> imageModels = placeModel.getImagesCollection();
+        for (ImageModel item: imageModels){
+            Images images = modelMapper.map(item, Images.class);
+            images.setPlaceid(places);
+            images = imageRepository.save(images);
+        }
+        //handle comment list
+        Collection<CommentsModel> commentsModels = placeModel.getCommentsModels();
+        for(CommentsModel item: commentsModels){
+            Comments comments = modelMapper.map(item, Comments.class);
+            comments.setPlaceid(places);// come to place object get placeId
+            comments.setUseridfr(places.getUserid());// come to user object get userId
+            comments =  commentRepository.save(comments);
+        }
 
-//        //handle list image
-//        Collection<ImageModel> imageModels = placeModel.getImagesCollection();
-//        for (ImageModel item: imageModels){
-//            Images images = modelMapper.map(item, Images.class);
-////            item.setImagesName(imageModels.);
-//        }
+        //handle Rating list
+        Collection<RatingsModel> ratingsModels = placeModel.getRatingsModelCollection();
+        for(RatingsModel item: ratingsModels){
+            Ratings ratings = modelMapper.map(item, Ratings.class);
+            ratings =  ratingRepository.save(ratings);
+        }
+
+        //handle wishLishItem list
+        Collection<WishListItemsModel> wishListItemsModels = placeModel.getWishListItemsModels();
+        for(WishListItemsModel item: wishListItemsModels){
+            WishListItems wishListItems = modelMapper.map(item, WishListItems.class);
+            wishListItems =  wishListItemsRepository.save(wishListItems);
+        }
+
+        //Adding a location does not need to add comments, ratings and wishlist
+        // because this information must be added to its own table. When adding place,
+        // only place information is added, not place's relational tables
         return "success";
     }
 

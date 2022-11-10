@@ -1,6 +1,5 @@
 package com.study.GreenPlace.model;
 
-import com.study.GreenPlace.entity.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,10 +27,10 @@ public class PlaceModel {
     private String road;
     private String phone;
     private Date browserday;
-    private Collection<Images> imagesCollection;
-    private PlaceTypes placetypeid;
-    private Users userid;
-    private Collection<Comments> commentsCollection;
-    private Collection<Ratings> ratingsCollection;
-    private Collection<WishListItems> wishListItemsCollection;
+    private Collection<ImageModel> imagesCollection;
+    private PlaceTypeModel placeTypeModel;
+    private UserModel userModel;
+    private Collection<CommentsModel> commentsModels;
+    private Collection<RatingsModel> ratingsModelCollection;
+    private Collection<WishListItemsModel> wishListItemsModels;
 }
