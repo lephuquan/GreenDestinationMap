@@ -74,7 +74,7 @@ public class UserService implements UserDetailsService {
 
     public String updateAccount(UserModel userModel) {
         Users users = userRepository.getReferenceById(userModel.getUserid());
-        //        users.setGender(userModel.); // ko get dc gender
+        users.setGender(userModel.isGender());
         users.setEmail(userModel.getEmail());
         users.setAddress(userModel.getAddress());
         users.setAvatar(userModel.getAvatar());

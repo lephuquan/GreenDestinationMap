@@ -21,4 +21,9 @@ public class ImageService {
         List<Images> Images = imageRepository.findAll();
         return new ModelMapper().map(Images, new TypeToken<List<ImageModel>>() {}.getType());
     }
+
+    public List<Images> finImageByPlaceId(short placeId){// remember check placeId exist before sent request
+        List<Images> Images = imageRepository.getImageByPlaceId(placeId);
+        return new ModelMapper().map(Images, new TypeToken<List<ImageModel>>() {}.getType());
+    }
 }

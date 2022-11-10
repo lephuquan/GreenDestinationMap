@@ -6,6 +6,7 @@ import com.study.GreenPlace.repository.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -96,7 +97,7 @@ public class PlaceService {
         }
 
         //handle Rating list
-        Collection<RatingsModel> ratingsModels = placeModel.getRatingsModelCollection();
+        Collection<RatingsModel> ratingsModels = placeModel.getRatingsModelCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
         for(RatingsModel item: ratingsModels){
             Ratings ratings = modelMapper.map(item, Ratings.class);
             ratings =  ratingRepository.save(ratings);
@@ -112,6 +113,61 @@ public class PlaceService {
         //Adding a location does not need to add comments, ratings and wishlist
         // because this information must be added to its own table. When adding place,
         // only place information is added, not place's relational tables
+        return "success";
+    }
+
+    public String updatePlace(PlaceModel placeModel){
+        Places places = placeRepository.getReferenceById(placeModel.getPlaceid());
+        ModelMapper modelMapper = new ModelMapper();
+        places.setStartday(placeModel.getStartday());
+        places.setMapid(placeModel.getMapid());
+        places.setStatus(false);// sau khi được duyệt sẽ chuyển thành true
+        places.setPlacename(placeModel.getPlacename());
+        places.setLat(placeModel.getLat());
+        places.setLon((placeModel.getLon()));
+        places.setCountry(placeModel.getCountry());
+        places.setCity(placeModel.getCity());
+        places.setDistrict(placeModel.getDistrict());
+        places.setWard(placeModel.getWard());
+        places.setDescription(placeModel.getDescription());
+        places.setStar(placeModel.getStar());
+        places.setRoad(placeModel.getRoad());
+        places.setPhone(placeModel.getPhone());
+        places.setBrowserday(placeModel.getBrowserday());
+        places.setPlacetypeid(placeTypeRepository.findById(placeModel.getPlaceTypeModel().getPlacetypeid()).get());
+        places.setUserid(userRepository.findById(placeModel.getUserModel().getUserid()).get());
+
+        places = placeRepository.save(places);
+
+        //handle list image
+        Collection<ImageModel> imageModels = placeModel.getImagesCollection();
+        for (ImageModel item: imageModels){
+            Images images = modelMapper.map(item, Images.class);
+            images.setPlaceid(places);
+            images = imageRepository.save(images);
+        }
+        //handle comment list
+        Collection<CommentsModel> commentsModels = placeModel.getCommentsModels();
+        for(CommentsModel item: commentsModels){
+            Comments comments = modelMapper.map(item, Comments.class);
+            comments.setPlaceid(places);// come to place object get placeId
+            comments.setUseridfr(places.getUserid());// come to user object get userId
+            comments =  commentRepository.save(comments);
+        }
+
+        //handle Rating list
+        Collection<RatingsModel> ratingsModels = placeModel.getRatingsModelCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
+        for(RatingsModel item: ratingsModels){
+            Ratings ratings = modelMapper.map(item, Ratings.class);
+            ratings =  ratingRepository.save(ratings);
+        }
+
+        //handle wishLishItem list
+        Collection<WishListItemsModel> wishListItemsModels = placeModel.getWishListItemsModels();
+        for(WishListItemsModel item: wishListItemsModels){
+            WishListItems wishListItems = modelMapper.map(item, WishListItems.class);
+            wishListItems =  wishListItemsRepository.save(wishListItems);
+        }
         return "success";
     }
 
