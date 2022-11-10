@@ -1,5 +1,6 @@
 package com.study.GreenPlace.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,10 +28,11 @@ public class PlaceModel {
     private String road;
     private String phone;
     private Date browserday;
+    @JsonManagedReference
     private Collection<ImageModel> imagesCollection;
-    private PlaceTypeModel placeTypeModel;
-    private UserModel userModel;
-    private Collection<CommentsModel> commentsModels;
+    private PlaceTypeModel placetypeid;
+    private UserModel userid;
+//    private Collection<CommentsModel> commentsModels;
     private Collection<RatingsModel> ratingsModelCollection;
-    private Collection<WishListItemsModel> wishListItemsModels;
+//    private Collection<WishListItemsModel> wishListItemsModels;
 }

@@ -36,6 +36,9 @@ public class PlaceService {
     @Autowired
     private  WishListItemsRepository wishListItemsRepository;
 
+    @Autowired
+    private CriteriaRepository criteriaRepository;
+
 
     public List<Places> getAllPlace(){
         List<Places>  places = placeRepository.findAll();
@@ -43,8 +46,7 @@ public class PlaceService {
     }
 
     public PlaceModel findPlaceById(Short id){
-        Places places = placeRepository.findById(id).get();
-            return new ModelMapper().map(places, PlaceModel.class);
+            return new ModelMapper().map(placeRepository.findById(id).get(), PlaceModel.class);
     }
 
     public PlaceModel findPlaceByName(String name){
@@ -75,41 +77,52 @@ public class PlaceService {
         places.setRoad(placeModel.getRoad());
         places.setPhone(placeModel.getPhone());
         places.setBrowserday(placeModel.getBrowserday());
-        places.setPlacetypeid(placeTypeRepository.findById(placeModel.getPlaceTypeModel().getPlacetypeid()).get());
-        places.setUserid(userRepository.findById(placeModel.getUserModel().getUserid()).get());
-
+        places.setPlacetypeid(placeTypeRepository.findById(placeModel.getPlacetypeid().getPlacetypeid()).get());
+        places.setUserid(userRepository.findById(placeModel.getUserid().getUserid()).get());
+        places.setRatingsCollection(null);
         places = placeRepository.save(places);
 
         //handle list image
-        Collection<ImageModel> imageModels = placeModel.getImagesCollection();
-        for (ImageModel item: imageModels){
-            Images images = modelMapper.map(item, Images.class);
-            images.setPlaceid(places);
-            images = imageRepository.save(images);
-        }
+//        Collection<ImageModel> imageModels = placeModel.getImagesCollection();
+//        for (ImageModel item: imageModels){
+//            Images images = modelMapper.map(item, Images.class);
+//            images.setPlaceid(places);
+//            images = imageRepository.save(images);
+//        }
         //handle comment list
-        Collection<CommentsModel> commentsModels = placeModel.getCommentsModels();
-        for(CommentsModel item: commentsModels){
-            Comments comments = modelMapper.map(item, Comments.class);
-            comments.setPlaceid(places);// come to place object get placeId
-            comments.setUseridfr(places.getUserid());// come to user object get userId
-            comments =  commentRepository.save(comments);
-        }
+//        Collection<CommentsModel> commentsModels = placeModel.getCommentsModels();
+//        for(CommentsModel item: commentsModels){
+//            Comments comments = modelMapper.map(item, Comments.class);
+//            comments.setPlaceid(places);// come to place object get placeId
+//            comments.setUseridfr(places.getUserid());// come to user object get userId
+//            comments =  commentRepository.save(comments);
+//        }
 
         //handle Rating list
-        Collection<RatingsModel> ratingsModels = placeModel.getRatingsModelCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
-        for(RatingsModel item: ratingsModels){
-            Ratings ratings = modelMapper.map(item, Ratings.class);
-            ratings =  ratingRepository.save(ratings);
-        }
+//        Collection<RatingsModel> ratingsModels = placeModel.getRatingsModelCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
+//        for(RatingsModel item: ratingsModels){
+//            Ratings ratings = modelMapper.map(item, Ratings.class);
+//            ratings =  ratingRepository.save(ratings);
+//        }
 
         //handle wishLishItem list
-        Collection<WishListItemsModel> wishListItemsModels = placeModel.getWishListItemsModels();
-        for(WishListItemsModel item: wishListItemsModels){
-            WishListItems wishListItems = modelMapper.map(item, WishListItems.class);
-            wishListItems =  wishListItemsRepository.save(wishListItems);
-        }
+//        Collection<WishListItemsModel> wishListItemsModels = placeModel.getWishListItemsModels();
+//        for(WishListItemsModel item: wishListItemsModels){
+//            WishListItems wishListItems = modelMapper.map(item, WishListItems.class);
+//            wishListItems =  wishListItemsRepository.save(wishListItems);
+//        }
 
+        Collection<RatingsModel> ratingsModels = placeModel.getRatingsModelCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
+        for(RatingsModel item: ratingsModels){
+            List<Criterias> criteriasList = criteriaRepository.getListCriteriaByPlaceTypeId(places.getPlacetypeid().getPlacetypeid());
+            for(Criterias criterias: criteriasList) {
+                Ratings ratings = modelMapper.map(item, Ratings.class);
+                ratings.setPlaceid(places);
+                ratings.setUseridfr(places.getUserid());
+                ratings.setCriteriaid(criterias);
+                ratings =  ratingRepository.save(ratings);
+            }
+        }
         //Adding a location does not need to add comments, ratings and wishlist
         // because this information must be added to its own table. When adding place,
         // only place information is added, not place's relational tables
@@ -134,8 +147,8 @@ public class PlaceService {
         places.setRoad(placeModel.getRoad());
         places.setPhone(placeModel.getPhone());
         places.setBrowserday(placeModel.getBrowserday());
-        places.setPlacetypeid(placeTypeRepository.findById(placeModel.getPlaceTypeModel().getPlacetypeid()).get());
-        places.setUserid(userRepository.findById(placeModel.getUserModel().getUserid()).get());
+        places.setPlacetypeid(placeTypeRepository.findById(placeModel.getPlacetypeid().getPlacetypeid()).get());
+        places.setUserid(userRepository.findById(placeModel.getUserid().getUserid()).get());
 
         places = placeRepository.save(places);
 
@@ -146,28 +159,35 @@ public class PlaceService {
             images.setPlaceid(places);
             images = imageRepository.save(images);
         }
+
         //handle comment list
-        Collection<CommentsModel> commentsModels = placeModel.getCommentsModels();
-        for(CommentsModel item: commentsModels){
-            Comments comments = modelMapper.map(item, Comments.class);
-            comments.setPlaceid(places);// come to place object get placeId
-            comments.setUseridfr(places.getUserid());// come to user object get userId
-            comments =  commentRepository.save(comments);
-        }
+//        Collection<CommentsModel> commentsModels = placeModel.getCommentsModels();
+//        for(CommentsModel item: commentsModels){
+//            Comments comments = modelMapper.map(item, Comments.class);
+//            comments.setPlaceid(places);// come to place object get placeId
+//            comments.setUseridfr(places.getUserid());// come to user object get userId
+//            comments =  commentRepository.save(comments);
+//        }
 
         //handle Rating list
         Collection<RatingsModel> ratingsModels = placeModel.getRatingsModelCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
         for(RatingsModel item: ratingsModels){
-            Ratings ratings = modelMapper.map(item, Ratings.class);
-            ratings =  ratingRepository.save(ratings);
+            List<Criterias> criteriasList = criteriaRepository.getListCriteriaByPlaceTypeId(places.getPlacetypeid().getPlacetypeid());
+            for(Criterias criterias: criteriasList) {
+                Ratings ratings = modelMapper.map(item, Ratings.class);
+                ratings.setPlaceid(places);
+                ratings.setUseridfr(places.getUserid());
+                ratings.setCriteriaid(criterias);
+                ratings =  ratingRepository.save(ratings);
+            }
         }
 
         //handle wishLishItem list
-        Collection<WishListItemsModel> wishListItemsModels = placeModel.getWishListItemsModels();
-        for(WishListItemsModel item: wishListItemsModels){
-            WishListItems wishListItems = modelMapper.map(item, WishListItems.class);
-            wishListItems =  wishListItemsRepository.save(wishListItems);
-        }
+//        Collection<WishListItemsModel> wishListItemsModels = placeModel.getWishListItemsModels();
+//        for(WishListItemsModel item: wishListItemsModels){
+//            WishListItems wishListItems = modelMapper.map(item, WishListItems.class);
+//            wishListItems =  wishListItemsRepository.save(wishListItems);
+//        }
         return "success";
     }
 
