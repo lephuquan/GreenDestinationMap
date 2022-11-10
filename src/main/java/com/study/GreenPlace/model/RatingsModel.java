@@ -16,6 +16,6 @@ public class RatingsModel {
     private Short ratingid;
     private boolean criteriavalue;
     private CriteriasModel criteriaid;
-    private PlaceModel placeModel;
-    private UserModel userModel;
+    private PlaceModel placeid;
+    private UserModel useridfr;
 }

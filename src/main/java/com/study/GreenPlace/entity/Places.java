@@ -145,6 +145,7 @@ public class Places implements Serializable {
     private PlaceTypes placetypeid;//<----
     @JoinColumn(name = "userid", referencedColumnName = "userid")
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Users userid;//<---
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "placeid")
     private Collection<Comments> commentsCollection;
@@ -345,7 +346,7 @@ public class Places implements Serializable {
         return ratingsCollection;
     }
 
-    public void setRatingsCollection(Collection<Ratings> ratingsCollection) {
+    public void     setRatingsCollection(Collection<Ratings> ratingsCollection) {
         this.ratingsCollection = ratingsCollection;
     }
 

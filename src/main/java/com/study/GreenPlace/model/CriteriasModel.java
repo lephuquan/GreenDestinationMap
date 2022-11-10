@@ -16,6 +16,6 @@ public class CriteriasModel {
     private Short criteriaid;
     private String image;
     private String criterianame;
-    private PlaceModel placeModel;
-    private Collection<RatingsModel> ratingsModelCollection;
+    private PlaceTypeModel placetypeid;
+    private Collection<RatingsModel> ratingsCollection;
 }
