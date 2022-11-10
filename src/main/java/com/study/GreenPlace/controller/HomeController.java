@@ -44,6 +44,11 @@ public class HomeController {
         return ResponseEntity.ok(placeService.addPlace(placeModel));
     }
 
+    @PutMapping("/updatePlace")
+    public ResponseEntity<?> updatePlace(@RequestBody PlaceModel placeModel){
+        return ResponseEntity.ok(placeService.updatePlace(placeModel));
+    }
+
     @RequestMapping(value = "/deletePlace/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deletePlace(@PathVariable(value = "id") short id) {
         return ok(placeService.deletePlace(id));
