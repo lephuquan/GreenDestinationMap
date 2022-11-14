@@ -1,5 +1,6 @@
 package com.study.GreenPlace.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +16,10 @@ public class RatingsModel {
 
     private Short ratingid;
     private boolean criteriavalue;
+    @JsonBackReference
     private CriteriasModel criteriaid;
+    @JsonBackReference
     private PlaceModel placeid;
+    @JsonBackReference
     private UserModel useridfr;
 }

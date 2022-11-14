@@ -79,23 +79,27 @@ public class UserController {
     @PostMapping("/updatePassword")
     public boolean authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {// if don't work, let test login
 
-        // Xác thực từ username và password.
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
+        try{
+            // Xác thực từ username và password.
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()
+                    )
+            );
 
-        // Nếu không xảy ra exception tức là thông tin hợp lệ
-        // Set thông tin authentication vào Security Context
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            // Nếu không xảy ra exception tức là thông tin hợp lệ
+            // Set thông tin authentication vào Security Context
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
 
-        // Trả về jwt cho người dùng.
-        String jwt = tokenProvider.generateToken ((CustomUserDetails) authentication.getPrincipal());
+            // Trả về jwt cho người dùng.
+            String jwt = tokenProvider.generateToken ((CustomUserDetails) authentication.getPrincipal());
 
-        return true;
+            return true;
+        }catch (Exception e){
+            return  false;
+        }
     }
 
 }

@@ -33,6 +33,7 @@ public class PlaceModel {
     private PlaceTypeModel placetypeid;
     private UserModel userid;
 //    private Collection<CommentsModel> commentsModels;
+    @JsonManagedReference
     private Collection<RatingsModel> ratingsModelCollection;
 //    private Collection<WishListItemsModel> wishListItemsModels;
 }
