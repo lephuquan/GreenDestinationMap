@@ -60,7 +60,7 @@ public class Places implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "placeid")
     private Short placeid;

@@ -50,9 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/api/login", "/api/register1", "/api", "/img/image", "/place/information","/place/{id}",
                                                 "/place/findByName/{name}","/place/findByUser/{userName}",
-                                                    "/place/deletePlace/{id}", "/user/register", "/img/image/{id}").permitAll();
+                                                    "/place/deletePlace/{id}", "/user/register", "/img/image/{id}", "/place/addPlace").permitAll();
         http.authorizeRequests().antMatchers("/api/random" ).hasAuthority("USER");
-        http.authorizeRequests().antMatchers("/api/random1", "/place/addPlace").hasAuthority("ADMIN");
+        http.authorizeRequests().antMatchers("/api/random1").hasAuthority("ADMIN");
         http.cors() // Ngăn chặn request từ một domain khác
                 .and()
                 .authorizeRequests()

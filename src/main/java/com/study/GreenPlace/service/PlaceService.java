@@ -78,7 +78,7 @@ public class PlaceService {
         places.setPhone(placeModel.getPhone());
         places.setBrowserday(placeModel.getBrowserday());
         places.setPlacetypeid(placeTypeRepository.findById(placeModel.getPlacetypeid().getPlacetypeid()).get());
-        places.setUserid(userRepository.findById(placeModel.getUserid().getUserid()).get());
+        places.setUserid(userRepository.findById(placeModel.getUserid().getUserid()).get());//. userId have to exist in database
         places.setRatingsCollection(null);
         places = placeRepository.save(places);
 
@@ -148,18 +148,17 @@ public class PlaceService {
         places.setPhone(placeModel.getPhone());
         places.setBrowserday(placeModel.getBrowserday());
         places.setPlacetypeid(placeTypeRepository.findById(placeModel.getPlacetypeid().getPlacetypeid()).get());
-        places.setUserid(userRepository.findById(placeModel.getUserid().getUserid()).get());
-
+        places.setUserid(userRepository.findById(placeModel.getUserid().getUserid()).get());//. userId have to exist in database
+        places.setRatingsCollection(null);
         places = placeRepository.save(places);
 
         //handle list image
-        Collection<ImageModel> imageModels = placeModel.getImagesCollection();
-        for (ImageModel item: imageModels){
-            Images images = modelMapper.map(item, Images.class);
-            images.setPlaceid(places);
-            images = imageRepository.save(images);
-        }
-
+//        Collection<ImageModel> imageModels = placeModel.getImagesCollection();
+//        for (ImageModel item: imageModels){
+//            Images images = modelMapper.map(item, Images.class);
+//            images.setPlaceid(places);
+//            images = imageRepository.save(images);
+//        }
         //handle comment list
 //        Collection<CommentsModel> commentsModels = placeModel.getCommentsModels();
 //        for(CommentsModel item: commentsModels){
@@ -170,6 +169,19 @@ public class PlaceService {
 //        }
 
         //handle Rating list
+//        Collection<RatingsModel> ratingsModels = placeModel.getRatingsModelCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
+//        for(RatingsModel item: ratingsModels){
+//            Ratings ratings = modelMapper.map(item, Ratings.class);
+//            ratings =  ratingRepository.save(ratings);
+//        }
+
+        //handle wishLishItem list
+//        Collection<WishListItemsModel> wishListItemsModels = placeModel.getWishListItemsModels();
+//        for(WishListItemsModel item: wishListItemsModels){
+//            WishListItems wishListItems = modelMapper.map(item, WishListItems.class);
+//            wishListItems =  wishListItemsRepository.save(wishListItems);
+//        }
+
         Collection<RatingsModel> ratingsModels = placeModel.getRatingsModelCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
         for(RatingsModel item: ratingsModels){
             List<Criterias> criteriasList = criteriaRepository.getListCriteriaByPlaceTypeId(places.getPlacetypeid().getPlacetypeid());
@@ -181,13 +193,6 @@ public class PlaceService {
                 ratings =  ratingRepository.save(ratings);
             }
         }
-
-        //handle wishLishItem list
-//        Collection<WishListItemsModel> wishListItemsModels = placeModel.getWishListItemsModels();
-//        for(WishListItemsModel item: wishListItemsModels){
-//            WishListItems wishListItems = modelMapper.map(item, WishListItems.class);
-//            wishListItems =  wishListItemsRepository.save(wishListItems);
-//        }
         return "success";
     }
 
