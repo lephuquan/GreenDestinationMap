@@ -79,8 +79,8 @@ public class UserController {
     @PostMapping("/updatePassword")
     public boolean authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {// if don't work, let test login
 
-        // Xác thực từ username và password.
         try{
+            // Xác thực từ username và password.
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getUsername(),
@@ -99,8 +99,6 @@ public class UserController {
         } catch (Exception e) {
             return false;
         }
-
-
     }
 
 }

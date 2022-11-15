@@ -53,4 +53,6 @@ public class HomeController {
     public ResponseEntity<?> deletePlace(@PathVariable(value = "id") short id) {
         return ok(placeService.deletePlace(id));
     }
+
+
 }

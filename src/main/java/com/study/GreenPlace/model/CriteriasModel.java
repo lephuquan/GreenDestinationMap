@@ -1,5 +1,7 @@
 package com.study.GreenPlace.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.study.GreenPlace.entity.PlaceTypes;
 import com.study.GreenPlace.entity.Ratings;
 import lombok.Getter;
@@ -17,5 +19,6 @@ public class CriteriasModel {
     private String image;
     private String criterianame;
     private PlaceTypeModel placetypeid;
-    private Collection<RatingsModel> ratingsCollection;
+    @JsonManagedReference
+    private Collection<RatingsModel> ratingsCollection; //Type criterias
 }
