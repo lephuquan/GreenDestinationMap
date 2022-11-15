@@ -22,4 +22,9 @@ public class CriteriaService {
         List<Criterias>  criterias = criteriaRepository.findAll();
         return new ModelMapper().map(criterias, new TypeToken<List<CriteriasModel>>() {}.getType());
     }
+
+    public List<Criterias> getCriteriasByPlaceId(short id){
+        List<Criterias>  criterias = criteriaRepository.getListCriteriaByPlaceTypeId(id);
+        return new ModelMapper().map(criterias, new TypeToken<List<CriteriasModel>>() {}.getType());
+    }
 }

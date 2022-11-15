@@ -12,5 +12,7 @@ import java.util.List;
 public interface CriteriaRepository extends JpaRepository<Criterias, Short> {
 
     @Query("SELECT c FROM Criterias c WHERE c.placetypeid.placetypeid = :id")
-    public List<Criterias>  getListCriteriaByPlaceTypeId(@Param("id")Short  id);
+    public List<Criterias>  getListCriteriaByPlaceTypeId(@Param("id")Short  id);// just get criterias by placeId
+
+
 }
