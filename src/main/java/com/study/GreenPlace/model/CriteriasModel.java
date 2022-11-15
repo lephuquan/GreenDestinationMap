@@ -20,5 +20,5 @@ public class CriteriasModel {
     private String criterianame;
     private PlaceTypeModel placetypeid;
     @JsonManagedReference
-    private Collection<RatingsModel> ratingsCollection; //Type criterias
+    private Collection<RatingsModel> ratingsCollection; // Trường này đồng thời đóng vai trò là những tiêu chí  của 1 địa điểm
 }
