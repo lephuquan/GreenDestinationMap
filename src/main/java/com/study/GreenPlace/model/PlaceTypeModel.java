@@ -1,6 +1,7 @@
 package com.study.GreenPlace.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.study.GreenPlace.entity.Criterias;
 import com.study.GreenPlace.entity.Places;
 import lombok.Getter;
@@ -20,6 +21,9 @@ public class PlaceTypeModel {
 
     private Short placetypeid;
     private String type;
-    private Collection<PlaceModel> placeModelCollection;
-    private Collection<CriteriasModel> criteriasModelCollection;
+    // *** ở đây chỉ lấy 2 thuộc tính cần thiết, không nên lấy hết, tránh lồng json vào nhau
+//    @JsonManagedReference
+//    private Collection<PlaceModel> placesCollection;
+//    @JsonManagedReference
+//    private Collection<CriteriasModel> criteriasCollection;
 }

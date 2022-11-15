@@ -1,6 +1,7 @@
 package com.study.GreenPlace.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,12 +15,13 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class RatingsModel {
 
+
     private Short ratingid;
     private boolean criteriavalue;
-    @JsonBackReference
-    private CriteriasModel criteriaid;
-    @JsonBackReference
-    private PlaceModel placeid;
-    @JsonBackReference
-    private UserModel useridfr;
+//    @JsonManagedReference
+    private CriteriasModel criteriasModel; // if open this -> addPlace fail. phải show criteria của place mà ko ảnh hướng đến addplace
+//    @JsonBackReference
+//    private PlaceModel placeid;
+//    @JsonBackReference
+//    private UserModel useridfr;
 }

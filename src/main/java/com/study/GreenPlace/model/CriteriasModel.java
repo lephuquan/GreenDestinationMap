@@ -18,7 +18,6 @@ public class CriteriasModel {
     private Short criteriaid;
     private String image;
     private String criterianame;
-    private PlaceTypeModel placetypeid;
-    @JsonManagedReference
-    private Collection<RatingsModel> ratingsCollection; // Trường này đồng thời đóng vai trò là những tiêu chí  của 1 địa điểm
+    private PlaceTypeModel placeTypeModel; // đổi tên lại không trùng với entity để nó ko mapping -> không lồng json, sau đó vào service viết thủ công để lấy nhưng thuộc tính cần lấy ra(getplace cũng vậy)
+    private Collection<RatingsModel> ratingsCollection;
 }

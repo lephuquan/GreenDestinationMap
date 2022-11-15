@@ -8,8 +8,9 @@ import lombok.Setter;
 @Setter
 public class ImageModel {
 
+
     private Short imageid;
     private String imagename;
-    @JsonBackReference
-    private PlaceModel placeid;
+//    @JsonBackReference
+//    private PlaceModel placeid;
 }

@@ -24,7 +24,7 @@ public class HomeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable(name = "id") short id) {
+    public ResponseEntity<?> findById(@PathVariable(name = "id") short id) {// trong api này có collection userId, muốn lấy đc userId trước tiên phải đăng nhập
         return ok(placeService.findPlaceById(id));
     }
 
