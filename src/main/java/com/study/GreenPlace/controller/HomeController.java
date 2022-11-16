@@ -34,9 +34,9 @@ public class HomeController {
         return ok(placeService.findPlaceByName(name));
     }
 
-    @GetMapping("/findByUser/{userName}")
-    public ResponseEntity<?> findPlaceBySupplierName(@PathVariable(name = "userName") String name) {
-        return ok(placeService.findPlaceBySupplierName(name));
+    @GetMapping("/findByUserId/{id}")
+    public ResponseEntity<?> findPlaceBySupplierId(@PathVariable(name = "id") short id) {
+        return ok(placeService.findPlaceBySupplierId(id));
     }
 
     @PostMapping("/addPlace")

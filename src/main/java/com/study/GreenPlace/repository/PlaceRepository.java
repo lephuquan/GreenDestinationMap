@@ -12,8 +12,10 @@ public interface PlaceRepository extends JpaRepository<Places, Short> {
     @Query("SELECT p FROM Places p WHERE p.placename LIKE :name")
     public Places findByNamePlace(@Param("name")String  name);
 
-    @Query("SELECT p FROM Places p WHERE p.userid.username LIKE :name")
-    public Places findPlaceBySupplierName(@Param("name")String  name);
+    @Query("SELECT p FROM Places p WHERE p.userid.userid = :id")
+    public List<Places> findPlaceBySupplierId(@Param("id")short id);
+//    @Query("SELECT p FROM Places p WHERE p.userid.username LIKE :name")
+//    public Places findPlaceBySupplierName(@Param("name")String  name);
 
 
 }

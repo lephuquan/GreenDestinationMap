@@ -38,7 +38,6 @@ public class UserController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
-
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         // Kiểm tra xem header Authorization có chứa thông tin jwt không
@@ -60,6 +59,7 @@ public class UserController {
     }
 
     @GetMapping("/userInfor")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> getUser(){
         String jwt = getJwtFromRequest(httpServletRequest);
         Short userId = tokenProvider.getUserIdFromJWT(jwt);
@@ -92,13 +92,12 @@ public class UserController {
             // Set thông tin authentication vào Security Context
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-
             // Trả về jwt cho người dùng.
             String jwt = tokenProvider.generateToken ((CustomUserDetails) authentication.getPrincipal());
 
             return true;
-        }catch (Exception e){
-            return  false;
+        } catch (Exception e) {
+            return false;
         }
     }
 

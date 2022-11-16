@@ -7,6 +7,7 @@ package com.study.GreenPlace.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;

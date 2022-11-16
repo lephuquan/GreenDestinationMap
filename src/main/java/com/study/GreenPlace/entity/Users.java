@@ -69,9 +69,10 @@ public class Users implements Serializable {
     @Size(max = 1024)
     @Column(name = "address")
     private String address;
+
 //    @Lob
     @Column(name = "avatar")
-    private byte[] avatar;
+    private String avatar;
     @Column(name = "startdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startdate;
@@ -173,11 +174,11 @@ public class Users implements Serializable {
         this.address = address;
     }
 
-    public byte[] getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 

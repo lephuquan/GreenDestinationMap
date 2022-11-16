@@ -54,9 +54,9 @@ public class PlaceService {
         return new ModelMapper().map(places, PlaceModel.class);
     }
 
-    public PlaceModel findPlaceBySupplierName(String name){
-        Places places = placeRepository.findPlaceBySupplierName(name);
-        return new ModelMapper().map(places, PlaceModel.class);
+    public List<Places> findPlaceBySupplierId(short id){
+        List<Places> places = placeRepository.findPlaceBySupplierId(id);
+        return new ModelMapper().map(places, new TypeToken<List<PlaceModel>>()  {}.getType());
     }
 
     public String addPlace(PlaceModel placeModel){
@@ -78,7 +78,7 @@ public class PlaceService {
         places.setPhone(placeModel.getPhone());
         places.setBrowserday(placeModel.getBrowserday());
         places.setPlacetypeid(placeTypeRepository.findById(placeModel.getPlacetypeid().getPlacetypeid()).get());
-        places.setUserid(userRepository.findById(placeModel.getUserid().getUserid()).get());
+        places.setUserid(userRepository.findById(placeModel.getUserid().getUserid()).get());//. userId have to exist in database
         places.setRatingsCollection(null);
         places.setImagesCollection(null);
         places.setCommentsCollection(null);
@@ -171,6 +171,7 @@ public class PlaceService {
 //            comments =  commentRepository.save(comments);
 //        }
 
+
     //handle Rating list
 //        Collection<RatingsModel> ratingsModels = placeModel.getRatingsModelCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
 //        for(RatingsModel item: ratingsModels){
@@ -178,12 +179,14 @@ public class PlaceService {
 //            ratings =  ratingRepository.save(ratings);
 //        }
 
+
     //handle wishLishItem list
 //        Collection<WishListItemsModel> wishListItemsModels = placeModel.getWishListItemsModels();
 //        for(WishListItemsModel item: wishListItemsModels){
 //            WishListItems wishListItems = modelMapper.map(item, WishListItems.class);
 //            wishListItems =  wishListItemsRepository.save(wishListItems);
 //        }
+
 
 //    Collection<RatingsModel> ratingsModels = placeModel.getRatingsCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
 //        for(RatingsModel item: ratingsModels){
