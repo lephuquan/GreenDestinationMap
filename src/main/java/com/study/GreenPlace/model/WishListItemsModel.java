@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 public class WishListItemsModel {
 
     private Short wishlistitemid;
-    private PlaceModel placeModel;
-    private WishListsModel wishListsModel;
+//    @JsonBackReference
+//    private PlaceModel placeid;
+//    @JsonBackReference
+//    private WishListsModel wishlistid;
 }

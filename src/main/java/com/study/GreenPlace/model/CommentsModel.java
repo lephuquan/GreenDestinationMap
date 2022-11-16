@@ -18,6 +18,7 @@ public class CommentsModel {
     private Short commentid;
     private Date postdate;
     private String content;
-    private PlaceModel placeModel;
-    private UserModel userModel;
+//    @JsonBackReference
+//    private PlaceModel placeid;
+    private UserModel useridfr;
 }
