@@ -33,7 +33,7 @@ public class UserModel {
     private String password;
     private String token;
     private String phonenumber;
-    @JsonBackReference
+//    @JsonBackReference
     private RolesModel roleid;
 //    @JsonManagedReference
 //    private Collection<RatingsModel> ratingsCollection;

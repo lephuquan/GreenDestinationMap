@@ -13,6 +13,6 @@ public class RolesModel {
     private Short roleid;
     private short role;
     private String rolesname;
-    @JsonManagedReference
-    private Collection<UserModel> usersCollection;
+//    @JsonManagedReference //ngăn chặn collection của rolemodel
+//    private Collection<UserModel> usersCollection;
 }
