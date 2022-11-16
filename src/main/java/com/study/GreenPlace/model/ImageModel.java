@@ -11,6 +11,7 @@ public class ImageModel {
 
     private Short imageid;
     private String imagename;
+    private String imagekey;
 //    @JsonBackReference
 //    private PlaceModel placeid;
 }

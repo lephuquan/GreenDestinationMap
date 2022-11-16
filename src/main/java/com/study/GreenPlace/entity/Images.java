@@ -47,6 +47,10 @@ public class Images implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "imagename")
     private String imagename;
+
+    @Column(name = "imagekey")
+    private String imagekey;
+
     @JoinColumn(name = "placeid", referencedColumnName = "placeid")
     @ManyToOne(optional = false)
     @JsonBackReference
@@ -78,6 +82,14 @@ public class Images implements Serializable {
 
     public void setImagename(String imagename) {
         this.imagename = imagename;
+    }
+
+    public String getImagekey() {
+        return  imagekey;
+    }
+
+    public void setImagekey(String  imagekey) {
+        this.imagekey = imagekey;
     }
 
     public Places getPlaceid() {

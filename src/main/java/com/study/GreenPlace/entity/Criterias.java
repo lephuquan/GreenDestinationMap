@@ -54,6 +54,10 @@ public class Criterias implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "criterianame")
     private String criterianame;
+
+    @Column(name = "actor")
+    private Integer actor;
+
     @JoinColumn(name = "placetypeid", referencedColumnName = "placetypeid")
     @ManyToOne(optional = false)
     private PlaceTypes placetypeid;
@@ -96,6 +100,17 @@ public class Criterias implements Serializable {
     public void setCriterianame(String criterianame) {
         this.criterianame = criterianame;
     }
+
+   //---- manual add
+   public Integer getActor() {
+       return actor;
+   }
+
+    public void setActor(Integer actor) {
+        this.actor = actor;
+    }
+    //---- manual add
+
 
     public PlaceTypes getPlacetypeid() {
         return placetypeid;

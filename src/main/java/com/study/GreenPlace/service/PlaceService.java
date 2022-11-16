@@ -8,6 +8,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,8 +46,20 @@ public class PlaceService {
     }
 
     public PlaceModel findPlaceById(Short id){// đưa criterias vào listRating
+        ModelMapper modelMapper = new ModelMapper();
         Places places = placeRepository.findById(id).get();
-        return new ModelMapper().map(places, PlaceModel.class);
+        Collection<Ratings> ratingsList = places.getRatingsCollection();
+        List<RatingsModel> ratingsModelList = new ArrayList<>();
+        for(Ratings ratings: ratingsList) {
+            Criterias criterias = ratings.getCriteriaid();
+            RatingsModel ratingsModel = modelMapper.map(ratings, RatingsModel.class);
+            CriteriasModel criteriasModel = modelMapper.map(criterias, CriteriasModel.class);
+            ratingsModel.setCriteriasModel(criteriasModel);
+            ratingsModelList.add(ratingsModel);
+        }
+        PlaceModel placeModel =  modelMapper.map(places, PlaceModel.class);
+        placeModel.setRatingsCollection(ratingsModelList);
+        return placeModel;
     }
 
     public PlaceModel findPlaceByName(String name){

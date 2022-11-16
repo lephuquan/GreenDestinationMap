@@ -103,6 +103,11 @@ public class Users implements Serializable {
     @Size(max = 20)
     @Column(name = "phonenumber")
     private String phonenumber;
+
+    @Size(max = 500)
+    @Column(name = "avatarkey")
+    private String  avatarkey;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
     @JsonBackReference
     private Collection<Places> placesCollection;
@@ -236,6 +241,14 @@ public class Users implements Serializable {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    public String getAvatarkey() {
+        return avatarkey;
+    }
+
+    public void setAvatarkey(String avatarkey) {
+        this.avatarkey = avatarkey;
     }
 
     @XmlTransient

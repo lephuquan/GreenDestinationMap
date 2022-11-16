@@ -30,6 +30,7 @@ public class UserModel {
     private String password;
     private String token;
     private String phonenumber;
+    private String  avatarkey;
 //    @JsonBackReference
     private RolesModel roleid;
 //    @JsonManagedReference
