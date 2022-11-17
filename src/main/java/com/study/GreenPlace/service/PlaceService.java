@@ -130,14 +130,13 @@ public class PlaceService {
 
         Collection<RatingsModel> ratingsModels = placeModel.getRatingsCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
         for(RatingsModel item: ratingsModels){
-            List<Criterias> criteriasList = criteriaRepository.getListCriteriaByPlaceTypeId(places.getPlacetypeid().getPlacetypeid());
-            for(Criterias criterias: criteriasList) {
-                Ratings ratings = modelMapper.map(item, Ratings.class);
-                ratings.setPlaceid(places);
-                ratings.setUseridfr(places.getUserid());// user rating, not user's place
-                ratings.setCriteriaid(criterias);
-                ratings =  ratingRepository.save(ratings);
-            }
+            // List<Criterias> criteriasList = criteriaRepository.getListCriteriaByPlaceTypeId(places.getPlacetypeid().getPlacetypeid());
+            Criterias criterias = criteriaRepository.findById(item.getCriteriasModel().getCriteriaid()).get();
+            Ratings ratings = modelMapper.map(item, Ratings.class);
+            ratings.setPlaceid(places);
+            ratings.setUseridfr(places.getUserid());// user rating, not user's place
+            ratings.setCriteriaid(criterias);
+            ratings =  ratingRepository.save(ratings);
         }
         //Adding a location does not need to add comments, ratings and wishlist
         // because this information must be added to its own table. When adding place,
