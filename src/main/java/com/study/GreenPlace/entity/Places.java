@@ -132,7 +132,7 @@ public class Places implements Serializable {
     @Column(name = "phone")
     private String phone;
     @Basic(optional = false)
-    @NotNull
+
     @Column(name = "browserday")
     @Temporal(TemporalType.TIMESTAMP)
     private Date browserday;

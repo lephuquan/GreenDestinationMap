@@ -89,7 +89,7 @@ public class PlaceService {
         places.setStar(placeModel.getStar());
         places.setRoad(placeModel.getRoad());
         places.setPhone(placeModel.getPhone());
-        places.setBrowserday(placeModel.getBrowserday());
+        places.setBrowserday(null);
         places.setPlacetypeid(placeTypeRepository.findById(placeModel.getPlacetypeid().getPlacetypeid()).get());
         places.setUserid(userRepository.findById(placeModel.getUserid().getUserid()).get());//. userId have to exist in database
         places.setRatingsCollection(null);
@@ -134,7 +134,7 @@ public class PlaceService {
             for(Criterias criterias: criteriasList) {
                 Ratings ratings = modelMapper.map(item, Ratings.class);
                 ratings.setPlaceid(places);
-                ratings.setUseridfr(places.getUserid());
+                ratings.setUseridfr(places.getUserid());// user rating, not user's place
                 ratings.setCriteriaid(criterias);
                 ratings =  ratingRepository.save(ratings);
             }
