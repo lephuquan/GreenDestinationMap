@@ -134,7 +134,7 @@ public class PlaceService {
             for(Criterias criterias: criteriasList) {
                 Ratings ratings = modelMapper.map(item, Ratings.class);
                 ratings.setPlaceid(places);
-                ratings.setUseridfr(places.getUserid());
+                ratings.setUseridfr(places.getUserid());// user rating, not user's place
                 ratings.setCriteriaid(criterias);
                 ratings =  ratingRepository.save(ratings);
             }
