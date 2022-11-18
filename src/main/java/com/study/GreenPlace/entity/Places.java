@@ -65,50 +65,50 @@ public class Places implements Serializable {
     @Column(name = "placeid")
     private Short placeid;
     @Basic(optional = false)
-    @NotNull
+
     @Column(name = "startday")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startday;
     @Basic(optional = false)
-    @NotNull
+
     @Column(name = "mapid")
     private long mapid;
     @Basic(optional = false)
-    @NotNull
+
     @Column(name = "status")
     private boolean status;
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 20)
     @Column(name = "placename")
     private String placename;
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 40)
     @Column(name = "lat")
     private String lat;
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 40)
     @Column(name = "lon")
     private String lon;
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 20)
     @Column(name = "country")
     private String country;
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 20)
     @Column(name = "city")
     private String city;
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 20)
     @Column(name = "district")
     private String district;
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 20)
     @Column(name = "ward")
     private String ward;
@@ -117,17 +117,17 @@ public class Places implements Serializable {
     private String description;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @NotNull
+
     @Column(name = "star")
     private BigDecimal star;
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 20)
     @Column(name = "road")
     private String road;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 20)
     @Column(name = "phone")
     private String phone;

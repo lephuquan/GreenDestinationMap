@@ -43,7 +43,7 @@ public class Images implements Serializable {
     @Column(name = "imageid")
     private Short imageid;
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 500)
     @Column(name = "imagename")
     private String imagename;
