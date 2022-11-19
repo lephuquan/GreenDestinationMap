@@ -161,7 +161,7 @@ public class PlaceService {
         places.setStar(placeModel.getStar());
         places.setRoad(placeModel.getRoad());
         places.setPhone(placeModel.getPhone());
-        places.setBrowserday(null);
+        places.setBrowserday(placeModel.getBrowserday());
         places.setPlacetypeid(placeTypeRepository.findById(placeModel.getPlacetypeid().getPlacetypeid()).get());
         places.setUserid(userRepository.findById(placeModel.getUserid().getUserid()).get());//. userId have to exist in database
         places.setRatingsCollection(null);
@@ -171,6 +171,7 @@ public class PlaceService {
         places = placeRepository.save(places);
 
         //handle list image
+        imageRepository.deleteImagesByPlaceId(places.getPlaceid());
         Collection<ImageModel> imageModels = placeModel.getImagesCollection();
         for (ImageModel item: imageModels){
             Images images = modelMapper.map(item, Images.class);
@@ -200,6 +201,7 @@ public class PlaceService {
 //            wishListItems =  wishListItemsRepository.save(wishListItems);
 //        }
 
+        ratingRepository.deleteRatingsByPlaceId(places.getPlaceid());
         Collection<RatingsModel> ratingsModels = placeModel.getRatingsCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
         for(RatingsModel item: ratingsModels){
             // List<Criterias> criteriasList = criteriaRepository.getListCriteriaByPlaceTypeId(places.getPlacetypeid().getPlacetypeid());

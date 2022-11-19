@@ -19,5 +19,5 @@ public class CriteriasModel {
     private String image;
     private String criterianame;
     private Integer actor;
-    private PlaceTypeModel placeTypeModel; // đổi tên lại không trùng với entity để nó ko mapping -> không lồng json, sau đó vào service viết thủ công để lấy nhưng thuộc tính cần lấy ra(getplace cũng vậy)
+    private PlaceTypeModel placetypeid;; // đổi tên lại không trùng với entity để nó ko mapping -> không lồng json, sau đó vào service viết thủ công để lấy nhưng thuộc tính cần lấy ra(getplace cũng vậy)
 }
