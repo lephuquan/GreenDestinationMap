@@ -94,22 +94,22 @@ public class Places implements Serializable {
     private String lon;
     @Basic(optional = false)
 
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 500)
     @Column(name = "country")
     private String country;
     @Basic(optional = false)
 
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 500)
     @Column(name = "city")
     private String city;
     @Basic(optional = false)
 
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 500)
     @Column(name = "district")
     private String district;
     @Basic(optional = false)
 
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 500)
     @Column(name = "ward")
     private String ward;
     @Size(max = 255)
@@ -122,7 +122,7 @@ public class Places implements Serializable {
     private BigDecimal star;
     @Basic(optional = false)
 
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 500)
     @Column(name = "road")
     private String road;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
