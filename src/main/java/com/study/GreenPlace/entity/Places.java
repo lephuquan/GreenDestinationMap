@@ -79,17 +79,17 @@ public class Places implements Serializable {
     private boolean status;
     @Basic(optional = false)
 
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 500)
     @Column(name = "placename")
     private String placename;
     @Basic(optional = false)
 
-    @Size(min = 1, max = 40)
+    @Size(min = 1, max = 500)
     @Column(name = "lat")
     private String lat;
     @Basic(optional = false)
 
-    @Size(min = 1, max = 40)
+    @Size(min = 1, max = 500)
     @Column(name = "lon")
     private String lon;
     @Basic(optional = false)

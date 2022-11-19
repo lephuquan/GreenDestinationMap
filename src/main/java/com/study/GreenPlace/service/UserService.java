@@ -85,6 +85,7 @@ public class UserService implements UserDetailsService {
         users.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
         users.setToken(userModel.getToken());
         users.setPhonenumber(userModel.getPhonenumber());
+        users.setAvatarkey(userModel.getAvatarkey());
         users.setRoleid(roleRepository.findByRole(userModel.getRoleid().getRolesname()));
         users = userRepository.save(users);
         return "success";
