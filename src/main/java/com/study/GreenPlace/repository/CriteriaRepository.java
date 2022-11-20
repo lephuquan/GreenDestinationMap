@@ -14,5 +14,8 @@ public interface CriteriaRepository extends JpaRepository<Criterias, Short> {
     @Query("SELECT c FROM Criterias c WHERE c.placetypeid.placetypeid = :id")
     public List<Criterias>  getListCriteriaByPlaceTypeId(@Param("id")Short  id);// just get criterias by placeId
 
+    @Query("SELECT c FROM Criterias c WHERE c.criteriaid = :id")
+    public Criterias  getCriteriasById(@Param("id")Short  id);// just get criterias by placeId
+
 
 }

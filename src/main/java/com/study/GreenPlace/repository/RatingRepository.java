@@ -4,9 +4,11 @@ import com.study.GreenPlace.entity.Comments;
 import com.study.GreenPlace.entity.Places;
 import com.study.GreenPlace.entity.Ratings;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,5 +16,10 @@ import java.util.List;
 public interface RatingRepository extends JpaRepository<Ratings, Short> {
 
     @Query("SELECT r FROM Ratings r WHERE r.placeid.placeid = :id")
-    public List<Ratings> findRatingByPlaceId(@Param("id")Short id);
+    public List<Ratings> findRatingByPlaceId(@Param("id") Short id);
+
+    @Modifying // allow delete
+    @Transactional // allow delete
+    @Query("DELETE FROM Ratings r WHERE r.placeid.placeid = :placeId")
+    public void deleteRatingsByPlaceId(@Param("placeId") short id);
 }

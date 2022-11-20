@@ -45,12 +45,12 @@ public class Criterias implements Serializable {
     @Column(name = "criteriaid")
     private Short criteriaid;
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 50)
     @Column(name = "image")
     private String image;
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 20)
     @Column(name = "criterianame")
     private String criterianame;

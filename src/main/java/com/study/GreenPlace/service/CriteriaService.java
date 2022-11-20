@@ -35,8 +35,30 @@ public class CriteriaService {
         List<CriteriasModel> criteriasModelList = modelMapper.map(criterias, new TypeToken<List<CriteriasModel>>() {}.getType());// convert entity list to model list
         for(CriteriasModel criteriasModel: criteriasModelList) {// assign each criterias from criteriaModelList
             PlaceTypes placeTypes = placeTypeRepository.findById(id).get();// get object placeType by placeId
-            criteriasModel.setPlaceTypeModel(modelMapper.map(placeTypes, PlaceTypeModel.class));// set object placeType in placeTypeModel to placeTypeModel
+            criteriasModel.setPlacetypeid(modelMapper.map(placeTypes, PlaceTypeModel.class));// set object placeType in placeTypeModel to placeTypeModel
         }
         return criteriasModelList;// return a criterias with each criteria has a placeType object
+    }
+
+    public String addCriterias(CriteriasModel criteriasModel){
+        ModelMapper modelMapper = new ModelMapper();
+        Criterias criterias = modelMapper.map(criteriasModel, Criterias.class);
+        criterias.setImage(null);
+        criterias.setCriterianame(criteriasModel.getCriterianame());
+        criterias.setActor(criteriasModel.getActor());
+        criterias.setPlacetypeid(placeTypeRepository.findById(criteriasModel.getPlacetypeid().getPlacetypeid()).get());
+        criteriaRepository.save(criterias);
+        return "success";
+    }
+
+    public String updateCriterias(CriteriasModel criteriasModel){
+        ModelMapper modelMapper = new ModelMapper();
+        Criterias criterias = criteriaRepository.getCriteriasById(criteriasModel.getCriteriaid());
+        criterias.setImage(null);
+        criterias.setCriterianame(criteriasModel.getCriterianame());
+        criterias.setActor(criteriasModel.getActor());
+        criterias.setPlacetypeid(placeTypeRepository.findById(criteriasModel.getPlacetypeid().getPlacetypeid()).get());
+        criteriaRepository.save(criterias);
+        return "success";
     }
 }
