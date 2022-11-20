@@ -161,7 +161,7 @@ public class PlaceService {
         places.setStar(placeModel.getStar());
         places.setRoad(placeModel.getRoad());
         places.setPhone(placeModel.getPhone());
-        places.setBrowserday(null);
+        places.setBrowserday(placeModel.getBrowserday());
         places.setPlacetypeid(placeTypeRepository.findById(placeModel.getPlacetypeid().getPlacetypeid()).get());
         places.setUserid(userRepository.findById(placeModel.getUserid().getUserid()).get());//. userId have to exist in database
         places.setRatingsCollection(null);
