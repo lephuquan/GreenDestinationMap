@@ -20,8 +20,8 @@ public class RatingsModel {
     private boolean criteriavalue;
 //    @JsonManagedReference
     private CriteriasModel criteriasModel; // if open this -> addPlace fail. phải show criteria của place mà ko ảnh hướng đến addplace
-//    @JsonBackReference
-//    private PlaceModel placeid;
-//    @JsonBackReference
-//    private UserModel useridfr;
+
+    private PlaceModel placeModel; //nestd -> neet to process manual before get out
+
+    private UserModel userModel;  //nestd -> neet to process manual before get out
 }

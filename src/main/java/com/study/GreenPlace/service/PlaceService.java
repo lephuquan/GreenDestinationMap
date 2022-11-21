@@ -45,7 +45,7 @@ public class PlaceService {
         return new ModelMapper().map(places, new TypeToken<List<PlaceModel>>() {}.getType());
     }
 
-    public PlaceModel findPlaceById(Short id){// đưa criterias vào listRating
+    public PlaceModel findPlaceById(Short id){// key
         ModelMapper modelMapper = new ModelMapper();
         Places places = placeRepository.findById(id).get();
         Collection<Ratings> ratingsList = places.getRatingsCollection();
@@ -77,7 +77,7 @@ public class PlaceService {
         Places places = modelMapper.map(placeModel, Places.class);
         places.setStartday(placeModel.getStartday());
         places.setMapid(placeModel.getMapid());
-        places.setStatus(false);// sau khi được duyệt sẽ chuyển thành true
+        places.setStatus(placeModel.isStatus());// sau khi được duyệt sẽ chuyển thành true
         places.setPlacename(placeModel.getPlacename());
         places.setLat(placeModel.getLat());
         places.setLon((placeModel.getLon()));
