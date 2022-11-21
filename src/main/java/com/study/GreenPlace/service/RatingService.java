@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -42,7 +41,7 @@ public class RatingService {
         return ratingsModel;
     }
 
-    public String addRating(Collection<RatingsModel> ratingsModel){
+    public String addRating(RatingsModel ratingsModel){// be ok
         ModelMapper modelMapper = new ModelMapper();
         Ratings ratings = modelMapper.map(ratingsModel, Ratings.class);
         ratings.setCriteriavalue(ratingsModel.isCriteriavalue());
