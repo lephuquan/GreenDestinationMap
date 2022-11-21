@@ -40,9 +40,25 @@ public class PlaceService {
     private CriteriaRepository criteriaRepository;
 
 
-    public List<Places> getAllPlace(){
-        List<Places>  places = placeRepository.findAll();
-        return new ModelMapper().map(places, new TypeToken<List<PlaceModel>>() {}.getType());
+    public List<PlaceModel> getAllPlace(){
+        ModelMapper modelMapper = new ModelMapper();
+        List<Places> places = placeRepository.findAll();
+        List<PlaceModel> placeModelList = new ArrayList<>();
+        for(Places item: places){
+            Collection<Ratings> ratingsList = item.getRatingsCollection();
+            List<RatingsModel> ratingsModelList = new ArrayList<>();
+            for(Ratings ratings: ratingsList) {
+                Criterias criterias = ratings.getCriteriaid();
+                RatingsModel ratingsModel = modelMapper.map(ratings, RatingsModel.class);
+                CriteriasModel criteriasModel = modelMapper.map(criterias, CriteriasModel.class);
+                ratingsModel.setCriteriasModel(criteriasModel);
+                ratingsModelList.add(ratingsModel);
+            }
+            PlaceModel placeModel =  modelMapper.map(item, PlaceModel.class);
+            placeModel.setRatingsCollection(ratingsModelList);
+            placeModelList.add(placeModel);
+        }
+        return placeModelList;
     }
 
     public PlaceModel findPlaceById(Short id){// key
@@ -62,15 +78,32 @@ public class PlaceService {
         return placeModel;
     }
 
+    public List<PlaceModel> findPlaceBySupplierId(short id){
+        ModelMapper modelMapper = new ModelMapper();
+        List<Places> places = placeRepository.findPlaceBySupplierId(id);
+        List<PlaceModel> placeModelList = new ArrayList<>();
+        for(Places item: places){
+            Collection<Ratings> ratingsList = item.getRatingsCollection();
+            List<RatingsModel> ratingsModelList = new ArrayList<>();
+            for(Ratings ratings: ratingsList) {
+                Criterias criterias = ratings.getCriteriaid();
+                RatingsModel ratingsModel = modelMapper.map(ratings, RatingsModel.class);
+                CriteriasModel criteriasModel = modelMapper.map(criterias, CriteriasModel.class);
+                ratingsModel.setCriteriasModel(criteriasModel);
+                ratingsModelList.add(ratingsModel);
+            }
+            PlaceModel placeModel =  modelMapper.map(item, PlaceModel.class);
+            placeModel.setRatingsCollection(ratingsModelList);
+            placeModelList.add(placeModel);
+        }
+        return placeModelList;
+    }
+
     public PlaceModel findPlaceByName(String name){
         Places places = placeRepository.findByNamePlace(name);
         return new ModelMapper().map(places, PlaceModel.class);
     }
 
-    public List<Places> findPlaceBySupplierId(short id){
-        List<Places> places = placeRepository.findPlaceBySupplierId(id);
-        return new ModelMapper().map(places, new TypeToken<List<PlaceModel>>()  {}.getType());
-    }
 
     public String addPlace(PlaceModel placeModel){
         ModelMapper modelMapper = new ModelMapper();

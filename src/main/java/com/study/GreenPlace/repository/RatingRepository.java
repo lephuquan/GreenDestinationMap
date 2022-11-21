@@ -16,10 +16,16 @@ import java.util.List;
 public interface RatingRepository extends JpaRepository<Ratings, Short> {
 
     @Query("SELECT r FROM Ratings r WHERE r.placeid.placeid = :placeId and r.useridfr.userid =:userId")
-    public Ratings findRatingByPlaceIdAndUserId(@Param("placeId")Short placeId,@Param("userId") Short userId );
+    public List<Ratings> findRatingByPlaceIdAndUserId(@Param("placeId")Short placeId,@Param("userId") Short userId );
 
     @Modifying // allow delete
     @Transactional // allow delete
     @Query("DELETE FROM Ratings r WHERE r.placeid.placeid = :placeId")
     public void deleteRatingsByPlaceId(@Param("placeId") short id);
+
+
+    @Modifying // allow delete
+    @Transactional // allow delete
+    @Query("DELETE FROM Ratings r WHERE r.placeid.placeid = :placeId and r.useridfr.userid =:userId")
+    public void deleteRatingBeforeUpdate(@Param("placeId")Short placeId,@Param("userId") Short userId );
 }

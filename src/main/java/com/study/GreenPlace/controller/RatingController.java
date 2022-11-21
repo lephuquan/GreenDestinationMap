@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
@@ -24,7 +26,13 @@ public class RatingController {
     //getuser/place/add/update
 
     @PostMapping("/addRating")
-    public ResponseEntity<?> addRating(@RequestBody RatingsModel ratingsModel){
+    public ResponseEntity<?> addRatings(@RequestBody Collection<RatingsModel> ratingsModel){
         return ResponseEntity.ok(ratingService.addRating(ratingsModel));
     }
+
+    @PutMapping("/updateRating")
+    public ResponseEntity<?> updateRatings(@RequestBody Collection<RatingsModel> ratingsModel){
+        return ResponseEntity.ok(ratingService.updateRating(ratingsModel));
+    }
+
 }
