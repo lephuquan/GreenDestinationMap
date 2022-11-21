@@ -52,7 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                                 "/place/findByName/{name}","/place/findByUser/{userName}",
                                                     "/place/deletePlace/{id}", "/user/register", "/img/image/{id}",
                                                     "/criterias/getAllCriterias", "/criterias/getCriteriasByPlaceTypeId/{id}", "/place/addPlace",
-                                                        "/criterias/addCriterias", "/criterias/updateCriterias", "/rating/getRatingByPlaceId/{id}").permitAll();
+                                                        "/criterias/addCriterias", "/criterias/updateCriterias", "/rating/getRatingByPlaceIdAndUserId/**", "/rating/addRating",
+                "/comment/addComment").permitAll();
         http.authorizeRequests().antMatchers("/api/random" ).hasAuthority("USER");
         http.authorizeRequests().antMatchers("/api/random1").hasAuthority("ADMIN");
         http.cors() // Ngăn chặn request từ một domain khác

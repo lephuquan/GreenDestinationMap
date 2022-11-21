@@ -15,8 +15,8 @@ import java.util.List;
 @Repository
 public interface RatingRepository extends JpaRepository<Ratings, Short> {
 
-    @Query("SELECT r FROM Ratings r WHERE r.placeid.placeid = :id")
-    public List<Ratings> findRatingByPlaceId(@Param("id") Short id);
+    @Query("SELECT r FROM Ratings r WHERE r.placeid.placeid = :placeId and r.useridfr.userid =:userId")
+    public Ratings findRatingByPlaceIdAndUserId(@Param("placeId")Short placeId,@Param("userId") Short userId );
 
     @Modifying // allow delete
     @Transactional // allow delete
