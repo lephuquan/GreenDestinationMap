@@ -163,7 +163,7 @@ public class PlaceService {
 
         Collection<RatingsModel> ratingsModels = placeModel.getRatingsCollection();// rating dùng để lưu  đánh giá và là submit nhưng tiêu chỉ mà địa điểm này có
         for(RatingsModel item: ratingsModels){
-            // List<Criterias> criteriasList = criteriaRepository.getListCriteriaByPlaceTypeId(places.getPlacetypeid().getPlacetypeid());
+            // List<DCriterias> criteriasList = criteriaRepository.getListCriteriaByPlaceTypeId(places.getPlacetypeid().getPlacetypeid());
             Criterias criterias = criteriaRepository.findById(item.getCriteriasModel().getCriteriaid()).get();
             Ratings ratings = modelMapper.map(item, Ratings.class);
             ratings.setPlaceid(places);
