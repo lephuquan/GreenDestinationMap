@@ -45,7 +45,7 @@ public class PlaceService {
         List<Places> places = placeRepository.findAll();
         List<PlaceModel> placeModelList = new ArrayList<>();
         for(Places item: places){
-            Collection<Ratings> ratingsList = item.getRatingsCollection();
+            Collection<Ratings> ratingsList = ratingRepository.getRatingsWithUserIdIsNull(item.getPlaceid());
             List<RatingsModel> ratingsModelList = new ArrayList<>();
             for(Ratings ratings: ratingsList) {
                 Criterias criterias = ratings.getCriteriaid();
@@ -83,7 +83,7 @@ public class PlaceService {
         List<Places> places = placeRepository.findPlaceBySupplierId(id);
         List<PlaceModel> placeModelList = new ArrayList<>();
         for(Places item: places){
-            Collection<Ratings> ratingsList = item.getRatingsCollection();
+            Collection<Ratings> ratingsList = ratingRepository.getRatingsWithUserIdIsNull(id);
             List<RatingsModel> ratingsModelList = new ArrayList<>();
             for(Ratings ratings: ratingsList) {
                 Criterias criterias = ratings.getCriteriaid();
