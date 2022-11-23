@@ -14,14 +14,11 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class RatingsModel {
-
-
+    
     private Short ratingid;
     private boolean criteriavalue;
 //    @JsonManagedReference
-    private CriteriasModel criteriasModel; // if open this -> addPlace fail. phải show criteria của place mà ko ảnh hướng đến addplace
-
-    private PlaceModel placeModel; //nestd -> neet to process manual before get out
-
-    private UserModel userModel;  //nestd -> neet to process manual before get out
+    private CriteriasModel criteriasModel;
+    private PlaceModel placeModel; //nestd -> need to process manual before get out
+    private UserModel userModel;  //nestd -> need to process manual before get out
 }

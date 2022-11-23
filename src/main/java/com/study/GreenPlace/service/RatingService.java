@@ -48,19 +48,19 @@ public class RatingService {
         return ratingsModelList; // return a model
     }
 
-//    public String addRating(Collection<RatingsModel> ratingsModel){
-//        for(RatingsModel item: ratingsModel){
-//            ModelMapper modelMapper = new ModelMapper();
-//            Ratings ratings = modelMapper.map(item, Ratings.class);
-//            ratings.setCriteriavalue(item.isCriteriavalue());
-//            Criterias criterias = modelMapper.map(item.getCriteriasModel(), Criterias.class);
-//            ratings.setCriteriaid(criteriaRepository.findById(item.getCriteriasModel().getCriteriaid()).get());
-//            ratings.setPlaceid(placeRepository.findById(item.getPlaceModel().getPlaceid()).get());
-//            ratings.setUseridfr(userRepository.findById(item.getUserModel().getUserid()).get());
-//            ratingRepository.save(ratings);
-//        }
-//        return  "sucess";
-//    }
+    public String addRating(Collection<RatingsModel> ratingsModel){
+        for(RatingsModel item: ratingsModel){
+            ModelMapper modelMapper = new ModelMapper();
+            Ratings ratings = modelMapper.map(item, Ratings.class);
+            ratings.setCriteriavalue(item.isCriteriavalue());
+            Criterias criterias = modelMapper.map(item.getCriteriasModel(), Criterias.class);
+            ratings.setCriteriaid(criteriaRepository.findById(item.getCriteriasModel().getCriteriaid()).get());
+            ratings.setPlaceid(placeRepository.findById(item.getPlaceModel().getPlaceid()).get());
+            ratings.setUseridfr(userRepository.findById(item.getUserModel().getUserid()).get());
+            ratingRepository.save(ratings);
+        }
+        return  "sucess";
+    }
 
     public String updateRating(Collection<RatingsModel> ratingsModel){
         for(RatingsModel item: ratingsModel){

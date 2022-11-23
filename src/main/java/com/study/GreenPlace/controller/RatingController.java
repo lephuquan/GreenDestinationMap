@@ -27,12 +27,12 @@ public class RatingController {
 
     @PostMapping("/addRating")
     public ResponseEntity<?> addRatings(@RequestBody Collection<RatingsModel> ratingsModel){
-        return ResponseEntity.ok(ratingService.updateRating(ratingsModel));
+        return ResponseEntity.ok(ratingService.addRating(ratingsModel));
     }
 
-//    @PutMapping("/updateRating")
-//    public ResponseEntity<?> updateRatings(@RequestBody Collection<RatingsModel> ratingsModel){
-//        return ResponseEntity.ok(ratingService.updateRating(ratingsModel));
-//    }
+    @PutMapping("/updateRating")
+    public ResponseEntity<?> updateRatings(@RequestBody Collection<RatingsModel> ratingsModel){
+        return ResponseEntity.ok(ratingService.updateRating(ratingsModel));
+    }
 
 }

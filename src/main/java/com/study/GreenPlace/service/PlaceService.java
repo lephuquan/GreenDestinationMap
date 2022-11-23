@@ -64,7 +64,7 @@ public class PlaceService {
     public PlaceModel findPlaceById(Short id){// key
         ModelMapper modelMapper = new ModelMapper();
         Places places = placeRepository.findById(id).get();
-        Collection<Ratings> ratingsList = places.getRatingsCollection();
+        Collection<Ratings> ratingsList = ratingRepository.getRatingsWithUserIdIsNull(id);
         List<RatingsModel> ratingsModelList = new ArrayList<>();
         for(Ratings ratings: ratingsList) {
             Criterias criterias = ratings.getCriteriaid();
@@ -167,7 +167,7 @@ public class PlaceService {
             Criterias criterias = criteriaRepository.findById(item.getCriteriasModel().getCriteriaid()).get();
             Ratings ratings = modelMapper.map(item, Ratings.class);
             ratings.setPlaceid(places);
-            ratings.setUseridfr(places.getUserid());// user rating, not user's place
+            ratings.setUseridfr(null);// user rating, not user's place - set null cause when add place is user not yet rating
             ratings.setCriteriaid(criterias);
             ratings =  ratingRepository.save(ratings);
         }

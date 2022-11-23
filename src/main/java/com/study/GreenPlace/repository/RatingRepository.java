@@ -28,4 +28,8 @@ public interface RatingRepository extends JpaRepository<Ratings, Short> {
     @Transactional // allow delete
     @Query("DELETE FROM Ratings r WHERE r.placeid.placeid = :placeId and r.useridfr.userid =:userId")
     public void deleteRatingBeforeUpdate(@Param("placeId")Short placeId,@Param("userId") Short userId );
+
+    @Query("SELECT r FROM Ratings r WHERE r.placeid.placeid = :placeId and r.useridfr.userid = null")
+    public List<Ratings> getRatingsWithUserIdIsNull(@Param("placeId")Short placeId);
+
 }
