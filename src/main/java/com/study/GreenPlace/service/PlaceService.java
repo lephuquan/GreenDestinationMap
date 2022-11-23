@@ -83,7 +83,7 @@ public class PlaceService {
         List<Places> places = placeRepository.findPlaceBySupplierId(id);
         List<PlaceModel> placeModelList = new ArrayList<>();
         for(Places item: places){
-            Collection<Ratings> ratingsList = ratingRepository.getRatingsWithUserIdIsNull(id);
+            Collection<Ratings> ratingsList = ratingRepository.getRatingsWithUserIdIsNull(item.getPlaceid());
             List<RatingsModel> ratingsModelList = new ArrayList<>();
             for(Ratings ratings: ratingsList) {
                 Criterias criterias = ratings.getCriteriaid();
@@ -252,7 +252,8 @@ public class PlaceService {
 }
 
     public  boolean deletePlace(short id){
-        placeRepository.deleteById(id);
+        ratingRepository.deleteRatingsByPlaceId(id);
+        placeRepository.deletePlace(id);
         return true;
     }
 
