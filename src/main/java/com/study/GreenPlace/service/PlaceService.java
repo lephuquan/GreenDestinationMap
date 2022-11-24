@@ -54,8 +54,22 @@ public class PlaceService {
                 ratingsModel.setCriteriasModel(criteriasModel);
                 ratingsModelList.add(ratingsModel);
             }
+
+
+            Collection<Comments> commentsList = commentRepository.getCommentByPlaceId(item.getPlaceid());
+            List<CommentsModel> commentsModelList = new ArrayList<>();
+            for(Comments comments: commentsList){
+                Users users = comments.getUseridfr();
+                CommentsModel commentsModel = modelMapper.map(comments, CommentsModel.class);
+                UserModel userModel = modelMapper.map(users, UserModel.class);
+                commentsModel.setUserModel(userModel);
+                commentsModelList.add(commentsModel);
+            }
+
+
             PlaceModel placeModel =  modelMapper.map(item, PlaceModel.class);
             placeModel.setRatingsCollection(ratingsModelList);
+            placeModel.setCommentsCollection(commentsModelList);//
             placeModelList.add(placeModel);
         }
         return placeModelList;
@@ -73,8 +87,20 @@ public class PlaceService {
             ratingsModel.setCriteriasModel(criteriasModel);
             ratingsModelList.add(ratingsModel);
         }
+
+
+        Collection<Comments> commentsList = commentRepository.getCommentByPlaceId(id);
+        List<CommentsModel> commentsModelList = new ArrayList<>();
+        for(Comments comments: commentsList){
+            Users users = comments.getUseridfr();
+            CommentsModel commentsModel = modelMapper.map(comments, CommentsModel.class);
+            UserModel userModel = modelMapper.map(users, UserModel.class);
+            commentsModel.setUserModel(userModel);
+            commentsModelList.add(commentsModel);
+        }
         PlaceModel placeModel =  modelMapper.map(places, PlaceModel.class);
         placeModel.setRatingsCollection(ratingsModelList);
+        placeModel.setCommentsCollection(commentsModelList);//
         return placeModel;
     }
 
@@ -83,6 +109,7 @@ public class PlaceService {
         List<Places> places = placeRepository.findPlaceBySupplierId(id);
         List<PlaceModel> placeModelList = new ArrayList<>();
         for(Places item: places){
+
             Collection<Ratings> ratingsList = ratingRepository.getRatingsWithUserIdIsNull(item.getPlaceid());
             List<RatingsModel> ratingsModelList = new ArrayList<>();
             for(Ratings ratings: ratingsList) {
@@ -92,8 +119,22 @@ public class PlaceService {
                 ratingsModel.setCriteriasModel(criteriasModel);
                 ratingsModelList.add(ratingsModel);
             }
+
+
+            Collection<Comments> commentsList = commentRepository.getCommentByPlaceId(item.getPlaceid());
+            List<CommentsModel> commentsModelList = new ArrayList<>();
+            for(Comments comments: commentsList){
+                Users users = comments.getUseridfr();
+                CommentsModel commentsModel = modelMapper.map(comments, CommentsModel.class);
+                UserModel userModel = modelMapper.map(users, UserModel.class);
+                commentsModel.setUserModel(userModel);
+                commentsModelList.add(commentsModel);
+            }
+
+
             PlaceModel placeModel =  modelMapper.map(item, PlaceModel.class);
             placeModel.setRatingsCollection(ratingsModelList);
+            placeModel.setCommentsCollection(commentsModelList);//
             placeModelList.add(placeModel);
         }
         return placeModelList;

@@ -24,4 +24,6 @@ public interface PlaceRepository extends JpaRepository<Places, Short> {
     @Transactional // allow delete
     @Query("DELETE FROM Places p WHERE p.placeid = :placeId")
     public void deletePlace(@Param("placeId")short placeId);
+
+
 }
