@@ -294,6 +294,7 @@ public class PlaceService {
 
     public  boolean deletePlace(short id){
         ratingRepository.deleteRatingsByPlaceId(id);
+        commentRepository.deleteCommentByPlaceId(id);
         placeRepository.deletePlace(id);
         return true;
     }
