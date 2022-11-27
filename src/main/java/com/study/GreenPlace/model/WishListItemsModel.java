@@ -15,7 +15,7 @@ public class WishListItemsModel {
 
     private Short wishlistitemid;
 //    @JsonBackReference
-//    private PlaceModel placeid;
+    private PlaceModel placeModel;
 //    @JsonBackReference
-//    private WishListsModel wishlistid;
+    private WishListsModel wishListsModel;
 }
