@@ -15,4 +15,7 @@ public interface WishListItemsRepository  extends JpaRepository<WishListItems, S
 
     @Query("SELECT w FROM WishListItems w WHERE w.wishlistid.wishlistid = :id")
     public List<WishListItems> findWishlistItemByWishlistId(@Param("id")short id);
+
+    @Query("SELECT w FROM WishListItems w WHERE w.placeid.placeid = :id")
+    public List<WishListItems> findWishlistItemByPlaceId(@Param("id")short id);
 }

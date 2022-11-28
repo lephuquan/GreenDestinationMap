@@ -67,9 +67,21 @@ public class PlaceService {
             }
 
 
+            Collection<WishListItems> wishListItems = wishListItemsRepository.findWishlistItemByPlaceId(item.getPlaceid());
+            List<WishListItemsModel> wishListItemsModels = new ArrayList<>();
+            for(WishListItems listItems: wishListItems){
+                WishListItemsModel wishListItemsModel = modelMapper.map(listItems, WishListItemsModel.class);
+                wishListItemsModel.setWishlistitemid(listItems.getWishlistitemid());
+                WishLists wishLists = listItems.getWishlistid();
+                WishListsModel wishListsModel = modelMapper.map(wishLists, WishListsModel.class);
+                wishListItemsModel.setWishListsModel(wishListsModel);
+                wishListItemsModels.add(wishListItemsModel);
+            }
+
             PlaceModel placeModel =  modelMapper.map(item, PlaceModel.class);
             placeModel.setRatingsCollection(ratingsModelList);
-            placeModel.setCommentsCollection(commentsModelList);//
+            placeModel.setCommentsCollection(commentsModelList);
+            placeModel.setWishListItemsCollection(wishListItemsModels);
             placeModelList.add(placeModel);
         }
         return placeModelList;

@@ -34,4 +34,6 @@ public interface CommentRepository  extends JpaRepository<Comments, Short> {
 
     @Query("SELECT c FROM Comments c WHERE c.commentid = :id")
     public Comments finByCommentId(@Param("id")short id);
+
+
 }

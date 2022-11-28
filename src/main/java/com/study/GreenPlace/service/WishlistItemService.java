@@ -39,6 +39,7 @@ public class WishlistItemService {
         WishListItems wishListItems = modelMapper.map(wishListItemsModel, WishListItems.class);
         wishListItems.setPlaceid(placeRepository.findById(wishListItemsModel.getPlaceModel().getPlaceid()).get());
         wishListItems.setWishlistid(wishListRepository.findById(wishListItemsModel.getWishListsModel().getWishlistid()).get());
+        wishListItemsRepository.save(wishListItems);
         return  "sucess";
     }
     public boolean deleteWishlistItem(short id){
