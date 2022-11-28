@@ -1,15 +1,11 @@
 package com.study.GreenPlace.service;
 
-import com.study.GreenPlace.entity.Users;
-import com.study.GreenPlace.entity.WishListItems;
-import com.study.GreenPlace.entity.WishLists;
+import com.study.GreenPlace.entity.*;
+import com.study.GreenPlace.model.PlaceModel;
 import com.study.GreenPlace.model.UserModel;
 import com.study.GreenPlace.model.WishListItemsModel;
 import com.study.GreenPlace.model.WishListsModel;
-import com.study.GreenPlace.repository.PlaceRepository;
-import com.study.GreenPlace.repository.UserRepository;
-import com.study.GreenPlace.repository.WishListItemsRepository;
-import com.study.GreenPlace.repository.WishListRepository;
+import com.study.GreenPlace.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +30,9 @@ public class WishListService {
 
     @Autowired
     private PlaceRepository placeRepository;
+
+    @Autowired
+    private ImageRepository imageRepository;
 
 
     public String addWishList(WishListsModel wishListsModel){
@@ -90,7 +89,29 @@ public class WishListService {
             Users users = item.getUserid();
             UserModel userModel = modelMapper.map(users, UserModel.class);
             wishListsModel.setUserModel(userModel);
-            wishListsModel.setWishListItemsModels(null);
+
+
+            //---------------process wishlistItem to get place to get image in place
+            List<WishListItems> wishListItemsList = wishListItemsRepository.findWishlistItemByWishlistId(item.getWishlistid());
+            Collection<WishListItemsModel> wishListItemsModels = new ArrayList<>();
+            for (WishListItems wishListItems: wishListItemsList){
+                WishListItemsModel wishListItemsModel = modelMapper.map(wishListItems, WishListItemsModel.class);
+                Places places = placeRepository.findById(wishListItems.getPlaceid().getPlaceid()).get();// get place from wishlistItem
+
+
+                List<Images> imagesList = imageRepository.getImageByPlaceId(places.getPlaceid());//get image from plce
+                for(Images imagesItem: imagesList){
+                    wishListsModel.setImage(imagesItem.getImagename());//set wishlistImage
+                    break;
+                }
+                    //-> set place for wishlistItem but don't need
+//                PlaceModel placeModel = modelMapper.map(places, PlaceModel.class);
+//                wishListItemsModel.setPlaceModel(placeModel);
+//                wishListItemsModels.add(wishListItemsModel);
+            }
+            //---------------
+
+            wishListsModel.setWishListItemsModels(wishListItemsModels);
             wishListsModelList.add(wishListsModel);
         }
         return wishListsModelList;

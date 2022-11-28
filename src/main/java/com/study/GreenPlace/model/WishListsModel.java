@@ -17,4 +17,5 @@ public class WishListsModel {
     private String wishlistname;
     private UserModel userModel;
     private Collection<WishListItemsModel> wishListItemsModels;
+    private String image;
 }
