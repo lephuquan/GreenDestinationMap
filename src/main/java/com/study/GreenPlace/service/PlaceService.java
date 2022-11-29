@@ -74,6 +74,8 @@ public class PlaceService {
                 wishListItemsModel.setWishlistitemid(listItems.getWishlistitemid());
                 WishLists wishLists = listItems.getWishlistid();
                 WishListsModel wishListsModel = modelMapper.map(wishLists, WishListsModel.class);
+                Users users = userRepository.findUserByWilistId(wishLists.getUserid().getUserid());
+                wishListsModel.setUserModel(modelMapper.map(users, UserModel.class));
                 wishListItemsModel.setWishListsModel(wishListsModel);
                 wishListItemsModels.add(wishListItemsModel);
             }
