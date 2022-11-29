@@ -19,4 +19,6 @@ public interface WishListRepository extends JpaRepository<WishLists, Short> {
     public List<WishLists> findPlaceByUserId(@Param("id")short id);
 
 
+
+
 }

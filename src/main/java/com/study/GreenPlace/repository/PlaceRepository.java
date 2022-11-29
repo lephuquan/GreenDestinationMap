@@ -19,6 +19,11 @@ public interface PlaceRepository extends JpaRepository<Places, Short> {
 //    @Query("SELECT p FROM Places p WHERE p.userid.username LIKE :name")
 //    public Places findPlaceBySupplierName(@Param("name")String  name);
 
+    @Query(value = "select * from places\n" +
+            "inner join wish_list_items on places.placeid = wish_list_items.placeid\n" +
+            "inner join wish_lists on wish_list_items.wishlistid =  wish_lists.wishlistid\n" +
+            "where wish_lists.wishlistid = :id", nativeQuery = true)
+    public List<Places> findPlaceByWishlistId(@Param("id")short id);
 
     @Modifying // allow delete
     @Transactional // allow delete

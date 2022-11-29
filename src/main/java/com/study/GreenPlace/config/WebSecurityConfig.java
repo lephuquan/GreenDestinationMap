@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/api/login", "/api/register1", "/api", "/img/image", "/place/information","/place/{id}",
+        http.authorizeRequests().antMatchers("/api/login", "/api/register1", "/api", "/img/image", "/place/information","/place/{id}", "/place/findPlacesByWishlistId/{id}",
                                                 "/place/findByName/{name}","/place/findByUser/{userName}",
                                                     "/place/deletePlace/{id}", "/user/register", "/img/image/{id}",
                                                     "/criterias/getAllCriterias", "/criterias/getCriteriasByPlaceTypeId/{id}", "/place/addPlace",

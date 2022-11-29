@@ -117,6 +117,8 @@ public class WishListService {
         return wishListsModelList;
     }
 
+
+
     public boolean deleteWishList(short id){
         wishListRepository.deleteById(id);
        return  true;

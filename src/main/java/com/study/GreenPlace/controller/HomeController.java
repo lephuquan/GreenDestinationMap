@@ -39,6 +39,11 @@ public class HomeController {
         return ok(placeService.findPlaceBySupplierId(id));
     }
 
+    @GetMapping("/findPlacesByWishlistId/{id}")
+    public ResponseEntity<?> findPlacesByWishlistId(@PathVariable(name = "id") short id) {
+        return ok(placeService.getPlacesByWishlistId(id));
+    }
+
     @PostMapping("/addPlace")
     public ResponseEntity<?> addPlace(@RequestBody PlaceModel placeModel){
         return ResponseEntity.ok(placeService.addPlace(placeModel));
