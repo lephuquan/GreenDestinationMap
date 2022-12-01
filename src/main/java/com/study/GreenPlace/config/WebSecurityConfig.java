@@ -56,7 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/comment/addComment", "/rating/updateRating", "/place/findByUserId/{id}",
                 "/comment/getCommentByPlaceId/{id}", "/comment/deleteComment/{id}", "/comment/updateComment",
                 "/wishList/addWishList", "/wishList/updateWishList", "/wishList/deleteWishList/{id}", "/wishList/getWishlistByUserId/{id}",
-                "/wishlistItem/addWishlistItem", "/wishlistItem//deleteWishListItem/{id}", "/wishlistItem/getWishlistItemByWishlistId/{id}").permitAll();
+                "/wishlistItem/addWishlistItem", "/wishlistItem//deleteWishListItem/{id}", "/wishlistItem/getWishlistItemByWishlistId/{id}",
+                "/notification/getByUserId/{id}", "/notification/updateStatus/{id}").permitAll();
         http.authorizeRequests().antMatchers("/api/random" ).hasAuthority("USER");
         http.authorizeRequests().antMatchers("/api/random1").hasAuthority("ADMIN");
         http.cors() // Ngăn chặn request từ một domain khác
