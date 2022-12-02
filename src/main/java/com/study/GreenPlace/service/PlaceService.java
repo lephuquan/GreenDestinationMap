@@ -363,6 +363,7 @@ public class PlaceService {
     public  boolean deletePlace(short id){
         ratingRepository.deleteRatingsByPlaceId(id);
         commentRepository.deleteCommentByPlaceId(id);
+        wishListItemsRepository.deleteWishlistItemByPlaceId(id);
         placeRepository.deletePlace(id);
         return true;
     }

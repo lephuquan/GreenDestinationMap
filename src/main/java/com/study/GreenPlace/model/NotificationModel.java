@@ -14,6 +14,7 @@ import java.util.Date;
 public class NotificationModel {
     private Short notificationid;
     private Date sentdate;
+    private boolean state;
     private String topic;
     private String notificationcontent;
     private Users useridfr;
