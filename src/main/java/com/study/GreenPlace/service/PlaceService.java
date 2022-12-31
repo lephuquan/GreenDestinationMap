@@ -92,6 +92,55 @@ public class PlaceService {
         return placeModelList;
     }
 
+    public List<PlaceModel> getPlacesByStatusIsTrue(){
+        ModelMapper modelMapper = new ModelMapper();
+        List<Places> places = placeRepository.findByStatusIsTrue();
+        List<PlaceModel> placeModelList = new ArrayList<>();
+        for(Places item: places){
+            Collection<Ratings> ratingsList = ratingRepository.getRatingsWithUserIdIsNull(item.getPlaceid());
+            List<RatingsModel> ratingsModelList = new ArrayList<>();
+            for(Ratings ratings: ratingsList) {
+                Criterias criterias = ratings.getCriteriaid();
+                RatingsModel ratingsModel = modelMapper.map(ratings, RatingsModel.class);
+                CriteriasModel criteriasModel = modelMapper.map(criterias, CriteriasModel.class);
+                ratingsModel.setCriteriasModel(criteriasModel);
+                ratingsModelList.add(ratingsModel);
+            }
+
+
+            Collection<Comments> commentsList = commentRepository.getCommentByPlaceId(item.getPlaceid());
+            List<CommentsModel> commentsModelList = new ArrayList<>();
+            for(Comments comments: commentsList){
+                Users users = comments.getUseridfr();
+                CommentsModel commentsModel = modelMapper.map(comments, CommentsModel.class);
+                UserModel userModel = modelMapper.map(users, UserModel.class);
+                commentsModel.setUserModel(userModel);
+                commentsModelList.add(commentsModel);
+            }
+
+
+            Collection<WishListItems> wishListItems = wishListItemsRepository.findWishlistItemByPlaceId(item.getPlaceid());
+            List<WishListItemsModel> wishListItemsModels = new ArrayList<>();
+            for(WishListItems listItems: wishListItems){
+                WishListItemsModel wishListItemsModel = modelMapper.map(listItems, WishListItemsModel.class);
+                wishListItemsModel.setWishlistitemid(listItems.getWishlistitemid());
+                WishLists wishLists = listItems.getWishlistid();
+                WishListsModel wishListsModel = modelMapper.map(wishLists, WishListsModel.class);
+                Users users = userRepository.findUserByWilistId(wishLists.getUserid().getUserid());
+                wishListsModel.setUserModel(modelMapper.map(users, UserModel.class));
+                wishListItemsModel.setWishListsModel(wishListsModel);
+                wishListItemsModels.add(wishListItemsModel);
+            }
+
+            PlaceModel placeModel =  modelMapper.map(item, PlaceModel.class);
+            placeModel.setRatingsCollection(ratingsModelList);
+            placeModel.setCommentsCollection(commentsModelList);
+            placeModel.setWishListItemsCollection(wishListItemsModels);
+            placeModelList.add(placeModel);
+        }
+        return placeModelList;
+    }
+
     public List<PlaceModel> getPlacesByWishlistId(short id){
         ModelMapper modelMapper = new ModelMapper();
         List<Places> places = placeRepository.findPlaceByWishlistId(id);

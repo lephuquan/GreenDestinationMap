@@ -23,6 +23,11 @@ public class HomeController {
         return ok(placeService.getAllPlace());
     }
 
+    @GetMapping("/approved")
+    public ResponseEntity<?> getPlaceByStatusIsTrue(){
+        return ok(placeService.getPlacesByStatusIsTrue());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable(name = "id") short id) {// trong api này có collection userId, muốn lấy đc userId trước tiên phải đăng nhập
         return ok(placeService.findPlaceById(id));
