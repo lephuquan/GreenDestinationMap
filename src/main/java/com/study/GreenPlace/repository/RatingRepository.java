@@ -20,7 +20,7 @@ public interface RatingRepository extends JpaRepository<Ratings, Short> {
 
     @Modifying // allow delete
     @Transactional // allow delete
-    @Query("DELETE FROM Ratings r WHERE r.placeid.placeid = :placeId")
+    @Query("DELETE FROM Ratings r WHERE r.placeid.placeid = :placeId and r.useridfr.userid = null")
     public void deleteRatingsByPlaceId(@Param("placeId") short id);
 
 

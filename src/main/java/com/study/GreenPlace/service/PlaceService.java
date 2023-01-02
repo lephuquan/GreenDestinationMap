@@ -340,7 +340,7 @@ public class PlaceService {
         Places places = placeRepository.getReferenceById(placeModel.getPlaceid());
         places.setStartday(placeModel.getStartday());
         places.setMapid(placeModel.getMapid());
-        places.setStatus(false);// sau khi được duyệt sẽ chuyển thành true
+        places.setStatus(placeModel.isStatus());// sau khi được duyệt sẽ chuyển thành true
         places.setPlacename(placeModel.getPlacename());
         places.setLat(placeModel.getLat());
         places.setLon((placeModel.getLon()));
@@ -399,7 +399,7 @@ public class PlaceService {
             Criterias criterias = criteriaRepository.findById(item.getCriteriasModel().getCriteriaid()).get();
             Ratings ratings = modelMapper.map(item, Ratings.class);
             ratings.setPlaceid(places);
-            ratings.setUseridfr(places.getUserid());// user rating, not user's place
+            ratings.setUseridfr(null);// user rating, not user's place
             ratings.setCriteriaid(criterias);
             ratings =  ratingRepository.save(ratings);
         }
