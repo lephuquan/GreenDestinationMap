@@ -4,12 +4,16 @@ import com.study.GreenPlace.entity.*;
 import com.study.GreenPlace.model.*;
 import com.study.GreenPlace.repository.*;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -417,4 +421,73 @@ public class PlaceService {
         return true;
     }
 
+    //fixedRate = 1000000
+    @Scheduled(cron = "0 45 1 * * ?", zone = "Europe/London")
+    public void scheduleFixedDelayTask() {
+//        System.out.println("Fixed delay task - " + System.currentTimeMillis() / 1000);
+
+        List<Places> places = placeRepository.findByStatusIsTrue();
+        System.out.println("vào hàm");
+        for(Places item: places){
+            System.out.println("-----------------vào for; id là: " + item.getPlaceid());
+            System.out.println(item.getStar().floatValue());
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+
+                System.out.println("vào try catch");
+            Date browserDate = null;
+            try {
+                browserDate = simpleDateFormat.parse(String.valueOf(item.getBrowserday()));
+                System.out.println(browserDate);
+                Date today = simpleDateFormat.parse(String.valueOf(LocalDate.now()));
+                System.out.println(today);
+
+                long startValue = browserDate.getTime();
+                System.out.println(startValue);
+                long endValue = today.getTime();
+                System.out.println(endValue);
+
+                long tmp = Math.abs(startValue-endValue);
+
+                long result = tmp/(24*60*60*1000);
+                System.out.println("result"+result);
+
+                if(result >= 90){
+
+                    Integer ratingNumber = Integer.valueOf(placeRepository.countRating((short) item.getPlaceid()));
+                    Integer userRatingNumber = Integer.valueOf(placeRepository.countUserRating((short) item.getPlaceid()));
+                    System.out.println("-----------" + ratingNumber);
+                    System.out.println("------------" + userRatingNumber);
+
+                    int check = 0;
+                    if(ratingNumber >= 4){// nếu nhỏ hơn 4 sau khi tính calstar sẽ <0 sau đó không thể chia cho 0
+                        float calStar = (ratingNumber / (8*userRatingNumber))*5;
+                        if(calStar < 3){
+                            deletePlace(item.getPlaceid());
+                            check ++;
+                            System.out.println("Đã xóa place có id" + item.getPlaceid());
+                        }
+                    }
+                    if(check == 0){
+                        if(item.getStar().floatValue() < 3){
+                            deletePlace(item.getPlaceid());
+                            System.out.println("Đã xóa place có id" + item.getPlaceid());
+                        }
+                    }
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+
+
+    public static void main(String[] args) {
+        PlaceService placeService = new PlaceService();
+        placeService.scheduleFixedDelayTask();
+//        placeService.testCount();
+    }
 }

@@ -30,8 +30,19 @@ public interface PlaceRepository extends JpaRepository<Places, Short> {
 
     @Modifying // allow delete
     @Transactional // allow delete
-    @Query("DELETE FROM Places p WHERE p.placeid = :placeId")
+    @Query(value = "EXEC deleteByRelationShip :placeId", nativeQuery = true)
     public void deletePlace(@Param("placeId")short placeId);
+
+
+    @Query(value = "select count(criteriaid)  as ok from ratings\n" +
+            "where useridfr is not NULL and placeid = :id", nativeQuery = true)
+    public int countRating(@Param("id")short id);
+
+
+    @Query(value = "SELECT  COUNT(DISTINCT  useridfr) as ok\n" +
+            "FROM ratings \n" +
+            "where  placeid = :id", nativeQuery = true)
+    public Short  countUserRating(@Param("id")short id);
 
 
 }
