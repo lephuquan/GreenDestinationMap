@@ -45,4 +45,12 @@ public interface PlaceRepository extends JpaRepository<Places, Short> {
     public Short  countUserRating(@Param("id")short id);
 
 
+    @Modifying // allow delete
+    @Transactional
+    // sửa lại id của người gửi - admin(phải có trong db)
+    @Query(value = "INSERT INTO notifications ( adminid, useridfr, topic, notificationcontent, sentdate, \"state\")\n" +
+            "VALUES (1, :useridfr, N'Thông báo từ hệ thống', N' 1 Địa điểm của bạn đã bị loại khỏi hệ thống do có nhiều đánh giá kém chất lượng ', GETDATE(), 0 )", nativeQuery = true)
+    public void sentNotificationAuto(@Param("useridfr")Short useridfrs);
+
+
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -422,9 +423,11 @@ public class PlaceService {
     }
 
     //fixedRate = 1000000
-    @Scheduled(cron = "0 45 1 * * ?", zone = "Europe/London")
+    //(cron = "0 45 1 * * ?", zone = "Europe/London")
+    @Scheduled(cron = "0 59 0 * * ?", zone = "Europe/London")
     public void scheduleFixedDelayTask() {
 //        System.out.println("Fixed delay task - " + System.currentTimeMillis() / 1000);
+
 
         List<Places> places = placeRepository.findByStatusIsTrue();
         System.out.println("vào hàm");
@@ -451,10 +454,12 @@ public class PlaceService {
                 long tmp = Math.abs(startValue-endValue);
 
                 long result = tmp/(24*60*60*1000);
-                System.out.println("result"+result);
+                System.out.println("ngày duyệt đến hiện tại là  "+result);
 
-                if(result >= 90){
-
+                //SELECT DATEDIFF(DAY, '2019/04/28', '2021/04/28')
+                //có place đủ 90 ngày duyệt, có 4rating ko null của địa điểm đó
+                if(result % 90 == 0){
+                    System.out.println("Chia cho 90 không dư");
                     Integer ratingNumber = Integer.valueOf(placeRepository.countRating((short) item.getPlaceid()));
                     Integer userRatingNumber = Integer.valueOf(placeRepository.countUserRating((short) item.getPlaceid()));
                     System.out.println("-----------" + ratingNumber);
@@ -463,15 +468,21 @@ public class PlaceService {
                     int check = 0;
                     if(ratingNumber >= 4){// nếu nhỏ hơn 4 sau khi tính calstar sẽ <0 sau đó không thể chia cho 0
                         float calStar = (ratingNumber / (8*userRatingNumber))*5;
-                        if(calStar < 3){
+                        if(calStar < 3) {
+                            System.out.println("tổng sao < 3");
+                            placeRepository.sentNotificationAuto(item.getUserid().getUserid());
+                            System.out.println("Đã inser notif xong" + item.getPlaceid());
                             deletePlace(item.getPlaceid());
-                            check ++;
+                            check++;
                             System.out.println("Đã xóa place có id" + item.getPlaceid());
+                        }else if(calStar >= 3){
+                            item.setStar(BigDecimal.valueOf(calStar));
                         }
                     }
                     if(check == 0){
                         if(item.getStar().floatValue() < 3){
                             deletePlace(item.getPlaceid());
+                            placeRepository.sentNotificationAuto(item.getUserid().getUserid());
                             System.out.println("Đã xóa place có id" + item.getPlaceid());
                         }
                     }
@@ -479,8 +490,6 @@ public class PlaceService {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-
         }
     }
 
